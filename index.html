@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brendan's Personal Website</title>
+    <link rel="stylesheet" href="https://unpkg.com/xp.css">
+    <style>
+        @font-face {
+            font-family: 'MS Sans Serif';
+            src: url('gui/fonts/converted/ms_sans_serif.woff2') format('woff2'),
+                 url('gui/fonts/converted/ms_sans_serif.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'MS Sans Serif';
+            src: url('gui/fonts/converted/ms_sans_serif_bold.woff2') format('woff2'),
+                 url('gui/fonts/converted/ms_sans_serif_bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('misc images/bliss windows.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'MS Sans Serif', 'Microsoft Sans Serif', sans-serif;
+        }
+
+        .desktop {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .window {
+            position: absolute;
+            min-width: 300px;
+            min-height: 200px;
+            cursor: move;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        .window.active {
+            z-index: 1000;
+        }
+
+        .title-bar {
+            cursor: move;
+        }
+
+        .window-body {
+            padding: 20px;
+            overflow: hidden;
+            height: calc(100% - 40px);
+            box-sizing: border-box;
+        }
+
+        .contact-info {
+            margin-top: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .contact-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            background-color: #000;
+            display: inline-block;
+        }
+
+        .portfolio-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #f0f0f0;
+        }
+
+        .portfolio-item h4 {
+            margin: 0 0 5px 0;
+            color: #000080;
+        }
+
+        .portfolio-item p {
+            margin: 0;
+            font-size: 12px;
+        }
+
+        .portfolio-item a {
+            color: #000080;
+            text-decoration: underline;
+        }
+
+        .start-button {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(to right, #000080, #1084d0);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-family: 'MS Sans Serif', sans-serif;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .start-button:hover {
+            background: linear-gradient(to right, #1084d0, #000080);
+        }
+
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 28px;
+            background: linear-gradient(to bottom, #c0c0c0, #a0a0a0);
+            border-top: 1px solid #ffffff;
+            z-index: 999;
+        }
+
+        .clock {
+            position: absolute;
+            right: 8px;
+            top: 4px;
+            font-size: 11px;
+            color: #fff;
+            font-family: 'MS Sans Serif', sans-serif;
+        }
+
+        /* Desktop Icons */
+        .desktop-icons {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 5; /* Keep icons below any window */
+            width: 120px;
+        }
+
+        /* Reserved area for desktop icons */
+        .desktop-reserved-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 140px;
+            height: 100vh;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .desktop-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            text-align: center;
+            padding: 5px;
+            border-radius: 3px;
+            transition: background-color 0.1s;
+        }
+
+        .desktop-icon:hover {
+            background-color: rgba(0, 123, 255, 0.3);
+        }
+
+        .desktop-icon.selected {
+            background-color: rgba(0, 123, 255, 0.5);
+        }
+
+        .desktop-icon img {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 5px;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+
+        .desktop-icon span {
+            font-size: 11px;
+            color: white;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
+            line-height: 1.2;
+            word-wrap: break-word;
+        }
+
+        /* Taskbar styling */
+        .taskbar {
+            background: linear-gradient(to bottom, #000080 0%, #1084d0 50%, #000080 100%);
+            border-top: 1px solid #ffffff;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8px 0 0;
+        }
+
+        .taskbar-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .taskbar-center {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        .taskbar-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .windows-update-icon {
+            width: 90px;
+            height: 90px;
+            margin-right: 8px;
+            cursor: pointer;
+            object-fit: contain;
+        }
+
+        .taskbar-item {
+            display: inline-block;
+            padding: 4px 8px;
+            margin: 2px;
+            background: linear-gradient(to bottom, #c0c0c0 0%, #a0a0a0 100%);
+            border: 1px solid #808080;
+            border-radius: 2px;
+            font-size: 11px;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .taskbar-item:hover {
+            background: linear-gradient(to bottom, #d0d0d0 0%, #b0b0b0 100%);
+        }
+
+        .taskbar-item.active {
+            background: linear-gradient(to bottom, #ffffff 0%, #c0c0c0 100%);
+            border-color: #000080;
+        }
+
+        /* Windows XP Elements */
+        .xp-button {
+            background: linear-gradient(to bottom, #f0f0f0 0%, #e0e0e0 50%, #d0d0d0 100%);
+            border: 1px solid #808080;
+            border-radius: 3px;
+            padding: 4px 12px;
+            font-family: 'MS Sans Serif', sans-serif;
+            font-size: 11px;
+            cursor: pointer;
+            box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .xp-button:hover {
+            background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 50%, #e0e0e0 100%);
+        }
+
+        .xp-button:active {
+            background: linear-gradient(to bottom, #d0d0d0 0%, #e0e0e0 50%, #f0f0f0 100%);
+            box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .xp-dropdown {
+            background: #ffffff;
+            border: 1px solid #808080;
+            border-radius: 3px;
+            padding: 4px 8px;
+            font-family: 'MS Sans Serif', sans-serif;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .xp-dropdown:hover {
+            border-color: #000080;
+        }
+
+        .loading-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #c0c0c0;
+            border-top: 2px solid #000080;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #f0f0f0;
+            border: 1px solid #808080;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #000080, #1084d0);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .window {
+            z-index: 20; /* Ensure even inactive windows sit above icons */
+            transition: z-index 0.1s ease;
+        }
+
+        .window.active {
+            z-index: 1020;
+        }
+
+        /* Windows XP Menu Bar */
+        .menu-bar {
+            background: linear-gradient(to bottom, #f0f0f0 0%, #e0e0e0 100%);
+            border-bottom: 1px solid #808080;
+            padding: 2px 0;
+            display: flex;
+            align-items: center;
+            font-family: 'MS Sans Serif', sans-serif;
+            font-size: 11px;
+            margin: 0 3px;
+        }
+
+        .menu-item {
+            padding: 4px 8px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            color: #000;
+            user-select: none;
+        }
+
+        .menu-item:hover {
+            background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
+            border: 1px solid #808080;
+        }
+
+        .menu-item:active {
+            background: linear-gradient(to bottom, #d0d0d0 0%, #e0e0e0 100%);
+            border: 1px solid #404040;
+        }
+
+        /* Window Title Bar Icon */
+        .title-bar-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Title bar layout fix */
+        .title-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .title-bar-text {
+            flex: 1;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop">
+        <!-- Reserved area for desktop icons -->
+        <div class="desktop-reserved-area"></div>
+        
+        <!-- Desktop Icons -->
+        <div class="desktop-icons">
+            <div class="desktop-icon" onclick="openWindow('welcome-window')">
+                <img src="Windows XP Icons/My Computer.png" alt="Welcome">
+                <span>Welcome</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('portfolio-window')">
+                <img src="Windows XP Icons/Briefcase.png" alt="Portfolio">
+                <span>Portfolio</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('about-window')">
+                <img src="Windows XP Icons/Favorites.png" alt="About">
+                <span>About Me</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('contact-window')">
+                <img src="Windows XP Icons/Compose a fax.png" alt="Contact">
+                <span>Contact</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('interests-window')">
+                <img src="Windows XP Icons/Appearance.png" alt="Interests">
+                <span>Interests</span>
+            </div>
+        </div>
+
+        <!-- Initial Welcome Window -->
+        <div class="window active" id="initial-welcome-window" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px;">
+            <div class="title-bar">
+                <img src="Windows XP Icons/My Computer.png" alt="" class="title-bar-icon">
+                <div class="title-bar-text">Welcome</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="window-body">
+                <h2 style="font-weight: normal; font-size: 16px; margin: 0 0 15px 0;">Hi, welcome to my page</h2>
+                <p style="font-size: 12px; line-height: 1.4; margin: 0 0 15px 0;">
+                    Click on the desktop icons to explore the site 
+                </p>
+                <button class="xp-button" onclick="closeInitialWelcome()" style="width: 100%;">Okay, got it</button>
+            </div>
+        </div>
+
+        <!-- Welcome Window -->
+        <div class="window" id="welcome-window" style="top: 50px; left: 160px; width: 400px;">
+            <div class="title-bar">
+                <img src="Windows XP Icons/My Computer.png" alt="" class="title-bar-icon">
+                <div class="title-bar-text">Welcome to My Page</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="menu-bar">
+                <div class="menu-item">File</div>
+                <div class="menu-item">Edit</div>
+                <div class="menu-item">View</div>
+                <div class="menu-item">Tools</div>
+            </div>
+            <div class="window-body">
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                    <img src="misc images/headshot cropped.JPG" alt="Brendan" style="width: 100px; height: 100px; border-radius: 50%; border: 2px solid #ccc;">
+                    <h2 style="font-weight: normal; font-size: 18px; margin: 0;">Hi, I'm Brendan</h2>
+                </div>
+                <p>Wassup <br> <br>I like computers</p>
+                
+                <div class="contact-info">
+                    <h3 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;">Explore My Site</h3>
+                    <p style="font-size: 12px; margin-bottom: 15px; line-height: 1.4;">
+                        Click on the desktop icons (portfolio, about me, etc.) to learn more about me.
+                    </p>
+                    
+                    <div style="background: #f0f0f0; border: 1px solid #ccc; padding: 12px; margin-bottom: 15px;">
+                        <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;">About Me</h4>
+                        <p style="font-size: 12px; margin: 0; line-height: 1.4;">
+                            I'm a student at Columbia University studying computer science with a minor in African Studies <br> <br>
+                            I'm currently working as a tech intern at AMC Networks 
+                        </p>
+                    </div>
+            
+                    <div style="margin-top: 10px;">
+                        <a href="https://open.spotify.com/user/brendansarpong" target="_blank" rel="noopener" style="color: #1db954; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify" style="width: 18px; height: 18px; vertical-align: middle;"> My Spotify (I have great taste)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Window -->
+        <div class="window" id="portfolio-window" style="top: 200px; left: 160px; width: 450px; height: 300px; display: none;">
+            <div class="title-bar">
+                <img src="Windows XP Icons/Briefcase.png" alt="" class="title-bar-icon">
+                <div class="title-bar-text">Portfolio</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="menu-bar">
+                <div class="menu-item">File</div>
+                <div class="menu-item">Edit</div>
+                <div class="menu-item">View</div>
+                <div class="menu-item">Tools</div>
+            </div>
+            <div class="window-body" style="height: 240px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
+                <h3 style="font-weight: normal; font-size: 16px; margin-bottom: 12px;">My Projects</h3>
+                
+                <div class="portfolio-item">
+                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 5px;">Sample Search</h4>
+                    <p>A fun game I made that teaches you how to identify samples in hip hop songs. Made for a Columbia UI Design course</p>
+                    <a href="https://brendan-sarpong.github.io/samplesearch/" target="_blank" rel="noopener">View Project →</a>
+                </div>
+
+                <div class="portfolio-item">
+                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 5px;">GTS Misinformation Site</h4>
+                    <p>This site houses a curriculum I made for a research project on misinformation.</p>
+                    <a href="https://brendansarpong.github.io/gts-misinfo/" target="_blank" rel="noopener">View Project →</a>
+                </div>
+
+                <div class="portfolio-item">
+                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 5px;">Surgery Turnover Time App</h4>
+                    <p>Me and my bud developed an app with doctors from the Spine Institute of San Diego that helps doctors reduce turnover time between surgeries, allowing them to help more people. <br> We coded it in React Native and used Firebase for the backend.</p>
+                </div>
+
+                <div class="portfolio-item">
+                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 5px;">Gr8 Eagle Cyber</h4>
+                    <p>I interned at a cybersecurity startup called Gr8 Eagle Cyber. In addition to my Security Intern role, I also worked on the website and marketing.</p>
+                    <a href="https://gr8eaglecyber.com/"  target="_blank" rel="noopener">View Site →</a>
+                </div>
+
+                <div class="portfolio-item">
+                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 5px;">Amateur Game Design</h4>
+                    <p>I used to make (bad) games in my free time. Here's one of them from years ago. Warning: rough around the edges</p>
+                    <a href="https://notbrendan.itch.io/updog"  target="_blank" rel="noopener">View Site →</a>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- About Window -->
+        <div class="window" id="about-window" style="top: 150px; left: 160px; width: 380px; height: 300px; display: none;">
+            <div class="title-bar">
+                <img src="Windows XP Icons/Favorites.png" alt="" class="title-bar-icon">
+                <div class="title-bar-text">About Brendan</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="menu-bar">
+                <div class="menu-item">File</div>
+                <div class="menu-item">Edit</div>
+                <div class="menu-item">View</div>
+                <div class="menu-item">Tools</div>
+            </div>
+            <div class="window-body" style="height: 240px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
+                <h3 style="font-weight: normal; font-size: 16px; margin-bottom: 12px;">About Me</h3>
+                <p>I have many skills tricks and talents</p>
+                
+                <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;">Skills & Technologies</h4>
+                <ul>
+                    <li>Frontend: React, HTML5, CSS, JavaScript</li>
+                    <li>Backend: Python, Java, C</li>
+                    <li>Tools: Git, AWS, Figma, Blender</li>
+                    <li>Other: Game Development, UI/UX Design, Cybersecurity, Video Editing</li>
+                </ul>
+
+                <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;">Experience</h4>
+                <p>I started off coding in HTML, CSS, and JavaScript about 7 years ago. Since then I've built mobile games, created websites, and pursued cybersecurity as a career.</p>
+
+                <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;">Interests</h4>
+                <p>When I'm not working or in school, I love film photography, skateboarding, movies, music, Better Call Saul, fashion, and soccer (any Chelsea fans?)</p>
+                
+             
+            </div>
+        </div>
+
+        <!-- Contact Window -->
+        <div class="window" id="contact-window" style="top: 100px; left: 160px; width: 350px; display: none;">
+            <div class="title-bar">
+                <img src="Windows XP Icons/Compose a fax.png" alt="" class="title-bar-icon">
+                <div class="title-bar-text">Contact Information</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="menu-bar">
+                <div class="menu-item">File</div>
+                <div class="menu-item">Edit</div>
+                <div class="menu-item">View</div>
+                <div class="menu-item">Tools</div>
+            </div>
+            <div class="window-body">
+                <h3 style="font-weight: normal; font-size: 16px; margin-bottom: 12px;">Get In Touch</h3>
+                <p>Reach out to me any time on the platforms below:</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon"></span>
+                        <span><strong>Email:</strong> brendansarpong@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon"></span>
+                        <span><strong>Phone:</strong> don't worry about it</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon"></span>
+                        <span><strong>LinkedIn:</strong> linkedin.com/in/brendansarpong</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon"></span>
+                        <span><strong>GitHub:</strong> github.com/brendansarpong</span>
+                    </div>
+        
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Interests Window -->
+        <div class="window" id="interests-window" style="top: 150px; left: 160px; width: 500px; height: 300px; display: none;">
+            <div class="title-bar">
+                <img src="Windows XP Icons/Appearance.png" alt="" class="title-bar-icon">
+                <div class="title-bar-text">My Interests</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="menu-bar">
+                <div class="menu-item">File</div>
+                <div class="menu-item">Edit</div>
+                <div class="menu-item">View</div>
+                <div class="menu-item">Tools</div>
+            </div>
+            <div class="window-body" style="height: 240px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
+                <h3 style="font-weight: normal; font-size: 16px; margin-bottom: 12px;">What I'm Into</h3>
+                
+                <div style="margin-bottom: 15px;">
+                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;">Film Photography</h4>
+                    <p style="margin-bottom: 8px; font-size: 12px;">I use an old canon sureshot supreme and the minolta freedom zoom</p>
+                    
+                    <!-- Film Photos Carousel -->
+                    <div style="background: #f0f0f0; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+                        <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;">
+                            <img src="film pics/put this one first.JPG" alt="Film Photo 1" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/put this one first.JPG', 'Film Photo 1')">
+                            <img src="film pics/entering the aether.JPG" alt="Film Photo 2" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/entering the aether.JPG', 'Film Photo 2')">
+                            <img src="film pics/friends.JPG" alt="Film Photo 3" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/friends.JPG', 'Film Photo 3')">
+                            <img src="film pics/peeking window.JPG" alt="Film Photo 4" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/peeking window.JPG', 'Film Photo 4')">
+                            <img src="film pics/triple heads.JPG" alt="Film Photo 5" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/triple heads.JPG', 'Film Photo 5')">
+                            <img src="film pics/red car.jpeg" alt="Film Photo 6" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/red car.jpeg', 'Film Photo 6')">
+                            <img src="film pics/IMG_2300.jpeg" alt="Film Photo 7" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/IMG_2300.jpeg', 'Film Photo 7')">
+                            <img src="film pics/painted ladies.jpg" alt="Film Photo 8" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/painted ladies.jpg', 'Film Photo 8')">
+                            <img src="film pics/cali mountains 1.png" alt="Film Photo 9" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/cali mountains 1.png', 'Film Photo 9')">
+                            <img src="film pics/cali mountains 2.png" alt="Film Photo 10" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/cali mountains 2.png', 'Film Photo 10')">
+                            <img src="film pics/000053980018.jpg" alt="Film Photo 11" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/000053980018.jpg', 'Film Photo 11')">
+                        </div>
+                        <p style="font-size: 10px; color: #666; margin: 5px 0 0 0;">Click any photo to view full size →</p>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;"> Camcorder Videos</h4>
+                    <p style="margin-bottom: 8px; font-size: 12px;">I use the canon es8600v. check this video of me and my friend from a couple years back.</p>
+                    <video controls muted style="width: 200px; height: 150px; border: 1px solid #999; margin-bottom: 5px;">
+                        <source src="misc images/camcorder video snippet.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p style="font-size: 10px; color: #666; margin: 0 0 0 0;">Camcorder video snippet</p>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;"> Skating</h4>
+                    <p style="margin-bottom: 8px; font-size: 12px;">Peep the board (shoutout Chris from Upper West Skates)</p>
+                    <img src="misc images/skateboard.jpg" alt="Skateboard" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; display: block; margin-bottom: 5px; cursor: pointer;" onclick="openPhotoModal('misc images/skateboard.jpg', 'Skateboard')">
+                    <p style="font-size: 10px; color: #666; margin: 0 0 0 0;">Click to view full size →</p>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;"> Fashion</h4>
+                    <p style="margin-bottom: 8px; font-size: 12px;">I don't really take fit pics but trust me I have good style here's an example</p>
+                    <img src="misc images/fit picture.jpg" alt="Fit Picture" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #999; display: block; margin-bottom: 5px; cursor: pointer;" onclick="openPhotoModal('misc images/fit picture.jpg', 'Fit Picture')">
+                    <p style="font-size: 10px; color: #666; margin: 0 0 0 0;">Click to view full size →</p>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;"> Music</h4>
+                    <p style="margin-bottom: 8px; font-size: 12px;">My favorite albums</p>
+
+                    <!-- Favorite Albums Carousel -->
+                    <div style="background: #f0f0f0; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+                        <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;">
+                            <img src="album covers/madvillainy - madvillain.png" alt="Madvillainy - Madvillain" style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('album covers/madvillainy - madvillain.png', 'Madvillainy - Madvillain')">
+                            <img src="album covers/midnight_marauders - atcq.png" alt="Midnight Marauders - A Tribe Called Quest" style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('album covers/midnight_marauders - atcq.png', 'Midnight Marauders - A Tribe Called Quest')">
+                            <img src="album covers/talking_book - stevie wonder.png" alt="Talking Book - Stevie Wonder" style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('album covers/talking_book - stevie wonder.png', 'Talking Book - Stevie Wonder')">
+                            <img src="album covers/what's going on - marvin gaye.png" alt="What's Going On - Marvin Gaye" style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('album covers/what\'s going on - marvin gaye.png', 'What\'s Going On - Marvin Gaye')">
+                            <img src="album covers/love deluxe - sade.png" alt="Love Deluxe - Sade" style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('album covers/love deluxe - sade.png', 'Love Deluxe - Sade')">
+                            <img src="album covers/igor - tyler, the creator.png" alt="IGOR - Tyler, The Creator" style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('album covers/igor - tyler, the creator.png', 'IGOR - Tyler, The Creator')">
+                            <img src="album covers/all my heroes are cornballs - jpegmafia.png" alt="All My Heroes Are Cornballs - JPEGMAFIA" style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('album covers/all my heroes are cornballs - jpegmafia.png', 'All My Heroes Are Cornballs - JPEGMAFIA')">
+                            <img src="album covers/pray for paris - westside gunn.png" alt="Pray For Paris - Westside Gunn" style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('album covers/pray for paris - westside gunn.png', 'Pray For Paris - Westside Gunn')">
+                            <img src="album covers/speaking in tongues - talking heads.png" alt="Speaking in Tongues - Talking Heads" style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('album covers/speaking in tongues - talking heads.png', 'Speaking in Tongues - Talking Heads')">
+                            <img src="album covers/random access memories - daft punk.png" alt="Random Access Memories - Daft Punk" style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('album covers/random access memories - daft punk.png', 'Random Access Memories - Daft Punk')">
+                            <img src="album covers/when I get home - solange.webp" alt="When I Get Home - Solange" style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('album covers/when I get home - solange.webp', 'When I Get Home - Solange')">
+                            <img src="album covers/two star and the dream police - mk.gee.png" alt="Two Star and the Dream Police - Mk.gee" style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('album covers/two star and the dream police - mk.gee.png', 'Two Star&the Dream Police-Mk.gee')">
+                        </div>
+                        <p style="font-size: 10px; color: #666; margin: 5px 0 0 0;">Click any album to view full size →</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Photo Modal -->
+        <div id="photo-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center;">
+            <div style="background: white; padding: 20px; border-radius: 5px; max-width: 90%; max-height: 90%; position: relative;">
+                <button onclick="closePhotoModal()" style="position: absolute; top: 10px; right: 15px; background: #f0f0f0; border: 1px solid #ccc; padding: 5px 10px; cursor: pointer; font-family: 'MS Sans Serif', sans-serif; font-size: 12px;">✕ Close</button>
+                <h3 id="modal-title" style="margin: 0 0 15px 0; font-weight: normal; font-size: 16px;"></h3>
+                <img id="modal-image" src="" alt="" style="max-width: 100%; max-height: 70vh; display: block; margin: 0 auto;">
+            </div>
+        </div>
+
+        <!-- Start Button -->
+        <button class="start-button">Start</button>
+
+        <!-- Taskbar -->
+        <div class="taskbar">
+            <div class="taskbar-left">
+                <img src="misc images/start icon.png" alt="Start" class="windows-update-icon" onclick="location.reload()">
+            </div>
+            <div class="taskbar-center">
+                
+            </div>
+            <div class="taskbar-right">
+                <div class="clock" id="clock"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Audio element for Windows XP startup sound
+        const startupSound = new Audio('Microsoft Windows XP Startup Sound.mp3');
+        startupSound.volume = 0.5; // Set volume to 50%
+        
+        // Debug audio loading
+        startupSound.addEventListener('canplaythrough', () => {
+            console.log('Audio loaded successfully');
+        });
+        
+        startupSound.addEventListener('error', (e) => {
+            console.log('Audio loading error:', e);
+        });
+        
+        // Play startup sound when page loads
+        window.addEventListener('load', () => {
+            console.log('Page loaded, attempting to play audio...');
+            // Small delay to ensure everything is loaded
+            setTimeout(() => {
+                startupSound.play().then(() => {
+                    console.log('Audio played successfully');
+                }).catch(error => {
+                    console.log('Audio playback prevented by browser:', error);
+                    // Try playing on first user interaction
+                    document.addEventListener('click', () => {
+                        startupSound.play().catch(e => console.log('Still blocked:', e));
+                    }, { once: true });
+                });
+            }, 500);
+        });
+        
+        // Draggable window functionality
+        let activeWindow = null;
+        let isDragging = false;
+        let dragOffset = { x: 0, y: 0 };
+
+        // Function to open windows from desktop icons and taskbar
+        function openWindow(windowId) {
+            const window = document.getElementById(windowId);
+            if (window) {
+                window.style.display = 'block';
+                bringToFront(window);
+                
+                // Update taskbar item state
+                document.querySelectorAll('.taskbar-item').forEach(item => item.classList.remove('active'));
+                event.target.classList.add('active');
+            }
+        }
+
+        // Function to bring window to front
+        function bringToFront(window) {
+            document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
+            window.classList.add('active');
+        }
+
+        // Make windows draggable
+        document.querySelectorAll('.window').forEach(window => {
+            const titleBar = window.querySelector('.title-bar');
+            
+            titleBar.addEventListener('mousedown', (e) => {
+                if (e.target.tagName === 'BUTTON') return;
+                
+                activeWindow = window;
+                isDragging = true;
+                
+                const rect = window.getBoundingClientRect();
+                dragOffset.x = e.clientX - rect.left;
+                dragOffset.y = e.clientY - rect.top;
+                
+                // Bring window to front
+                bringToFront(window);
+                
+                e.preventDefault();
+            });
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging || !activeWindow) return;
+            
+            const x = e.clientX - dragOffset.x;
+            const y = e.clientY - dragOffset.y;
+            
+            // Keep window within viewport bounds and away from desktop icons
+            const maxX = window.innerWidth - activeWindow.offsetWidth;
+            const maxY = window.innerHeight - activeWindow.offsetHeight;
+            const minX = 140; // Reserved area width
+            
+            activeWindow.style.left = Math.max(minX, Math.min(x, maxX)) + 'px';
+            activeWindow.style.top = Math.max(0, Math.min(y, maxY)) + 'px';
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            activeWindow = null;
+        });
+
+        // Window controls
+        document.querySelectorAll('.title-bar-controls button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const window = e.target.closest('.window');
+                const action = e.target.getAttribute('aria-label').toLowerCase();
+                
+                if (action === 'close') {
+                    window.style.display = 'none';
+                } else if (action === 'minimize') {
+                    window.style.display = 'none';
+                    // In a real implementation, you'd add it to the taskbar
+                } else if (action === 'maximize') {
+                    if (window.style.width === '100vw') {
+                        window.style.width = '';
+                        window.style.height = '';
+                        window.style.top = '';
+                        window.style.left = '';
+                    } else {
+                        window.style.width = '100vw';
+                        window.style.height = 'calc(100vh - 28px)';
+                        window.style.top = '0';
+                        window.style.left = '0';
+                    }
+                }
+            });
+        });
+
+        // Desktop icon selection
+        document.querySelectorAll('.desktop-icon').forEach(icon => {
+            icon.addEventListener('click', () => {
+                document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
+                icon.classList.add('selected');
+            });
+        });
+
+        // Clock functionality
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+            document.getElementById('clock').textContent = timeString;
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // Start button functionality
+        document.querySelector('.start-button').addEventListener('click', () => {
+            location.reload();
+        });
+
+        // Click to focus windows
+        document.querySelectorAll('.window').forEach(window => {
+            window.addEventListener('click', (e) => {
+                if (!e.target.closest('.title-bar-controls')) {
+                    bringToFront(window);
+                }
+            });
+        });
+
+        // Click outside to deselect
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.window') && !e.target.closest('.desktop-icon')) {
+                document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
+                document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
+            }
+        });
+
+        // Initialize windows - show welcome window behind the initial welcome window
+        document.addEventListener('DOMContentLoaded', () => {
+            // Show welcome window behind the initial welcome window
+            const welcomeWindow = document.getElementById('welcome-window');
+            if (welcomeWindow) {
+                welcomeWindow.style.display = 'block';
+                welcomeWindow.classList.remove('active');
+            }
+            
+            // Set video volume to 30% when it loads
+            const video = document.querySelector('video');
+            if (video) {
+                video.addEventListener('loadedmetadata', () => {
+                    video.volume = 0.3; // Set volume to 30%
+                });
+            }
+            
+            // Animate portfolio progress bar
+            setTimeout(() => {
+                const progressBar = document.getElementById('portfolio-progress');
+                if (progressBar) {
+                    progressBar.style.width = '75%';
+                }
+            }, 1000);
+        });
+
+        // Function to close initial welcome window
+        function closeInitialWelcome() {
+            const initialWelcome = document.getElementById('initial-welcome-window');
+            if (initialWelcome) {
+                initialWelcome.style.display = 'none';
+            }
+            
+            // Try to play startup sound on first user interaction if it hasn't played yet
+            if (startupSound.paused) {
+                startupSound.play().then(() => {
+                    console.log('Audio played on user interaction');
+                }).catch(e => console.log('Audio still blocked:', e));
+            }
+        }
+
+        // Photo modal functions
+        function openPhotoModal(imageSrc, title) {
+            const modal = document.getElementById('photo-modal');
+            const modalImage = document.getElementById('modal-image');
+            const modalTitle = document.getElementById('modal-title');
+            
+            modalImage.src = imageSrc;
+            modalTitle.textContent = title;
+            modal.style.display = 'flex';
+        }
+
+        function closePhotoModal() {
+            const modal = document.getElementById('photo-modal');
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('photo-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'photo-modal') {
+                closePhotoModal();
+            }
+        });
+    </script>
+</body>
+</html> 
