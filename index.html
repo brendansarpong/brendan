@@ -402,6 +402,200 @@
             flex: 1;
             text-align: left;
         }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            body {
+                overflow-x: hidden;
+            }
+
+            .desktop {
+                overflow-x: hidden;
+            }
+
+            .window {
+                min-width: 280px;
+                max-width: calc(100vw - 20px);
+                left: 10px !important;
+                right: 10px;
+                width: calc(100vw - 20px) !important;
+            }
+
+            .window-body {
+                padding: 15px;
+                font-size: 14px;
+            }
+
+            /* Desktop icons - make them smaller and stack better */
+            .desktop-icons {
+                width: 100%;
+                left: 0;
+                top: 10px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: flex-start;
+                padding: 0 10px;
+            }
+
+            .desktop-icon {
+                width: 60px;
+                margin-bottom: 10px;
+            }
+
+            .desktop-icon img {
+                width: 24px;
+                height: 24px;
+            }
+
+            .desktop-icon span {
+                font-size: 10px;
+            }
+
+            .desktop-reserved-area {
+                width: 0;
+                height: 0;
+            }
+
+            /* Taskbar adjustments */
+            .taskbar {
+                height: 40px;
+                flex-wrap: wrap;
+            }
+
+            .taskbar-left {
+                width: 60px;
+            }
+
+            .windows-update-icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .taskbar-center {
+                flex: 1;
+                min-width: 0;
+                overflow-x: auto;
+                padding: 2px;
+            }
+
+            .taskbar-item {
+                min-width: 100px;
+                max-width: 150px;
+                font-size: 10px;
+                padding: 2px 6px;
+                height: 32px;
+            }
+
+            .taskbar-item-icon {
+                width: 14px;
+                height: 14px;
+            }
+
+            .taskbar-right {
+                width: 80px;
+            }
+
+            .clock {
+                font-size: 10px;
+            }
+
+            /* Window content adjustments */
+            .window-body h3,
+            .window-body h4 {
+                font-size: 14px;
+            }
+
+            .window-body p {
+                font-size: 12px;
+            }
+
+            /* Photo carousels - make images smaller on mobile */
+            .window-body img[style*="width: 120px"] {
+                width: 80px !important;
+                height: 60px !important;
+            }
+
+            .window-body img[style*="width: 80px"] {
+                width: 60px !important;
+                height: 60px !important;
+            }
+
+            /* Video adjustments */
+            video {
+                max-width: 100% !important;
+                height: auto !important;
+            }
+
+            /* Contact items */
+            .contact-item {
+                font-size: 12px;
+            }
+
+            /* Portfolio items */
+            .portfolio-item {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            /* Maximize button behavior on mobile - use more of screen */
+            .window[data-maximized="true"] {
+                width: calc(100vw - 20px) !important;
+                height: calc(100vh - 60px) !important;
+                left: 10px !important;
+                top: 10px !important;
+            }
+
+            /* Photo modal adjustments */
+            #photo-modal {
+                padding: 10px;
+            }
+
+            #photo-modal > div {
+                max-width: 95%;
+                padding: 15px;
+            }
+
+            #modal-image {
+                max-height: 60vh !important;
+            }
+
+            /* Start button */
+            .start-button {
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .window {
+                min-width: 260px;
+            }
+
+            .desktop-icon {
+                width: 50px;
+            }
+
+            .desktop-icon img {
+                width: 20px;
+                height: 20px;
+            }
+
+            .desktop-icon span {
+                font-size: 9px;
+            }
+
+            .taskbar-item {
+                min-width: 80px;
+                max-width: 120px;
+                font-size: 9px;
+            }
+
+            .window-body {
+                padding: 10px;
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -434,7 +628,7 @@
         </div>
 
         <!-- Initial Welcome Window -->
-        <div class="window active" id="initial-welcome-window" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px;">
+        <div class="window active" id="initial-welcome-window" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 450px; height: 300px;">
             <div class="title-bar">
                 <img src="Windows XP Icons/My Computer.png" alt="" class="title-bar-icon">
                 <div class="title-bar-text">Welcome</div>
@@ -457,7 +651,7 @@
         </div>
 
         <!-- Welcome Window -->
-        <div class="window" id="welcome-window" style="top: 50px; left: 160px; width: 400px;">
+        <div class="window" id="welcome-window" style="top: 50px; left: 160px; width: 550px; height: 450px;">
             <div class="title-bar">
                 <img src="Windows XP Icons/My Computer.png" alt="" class="title-bar-icon">
                 <div class="title-bar-text">Welcome to My Page</div>
@@ -504,7 +698,7 @@
         </div>
 
         <!-- Portfolio Window -->
-        <div class="window" id="portfolio-window" style="top: 200px; left: 160px; width: 450px; height: 300px; display: none;">
+        <div class="window" id="portfolio-window" style="top: 200px; left: 160px; width: 600px; height: 450px; display: none;">
             <div class="title-bar">
                 <img src="Windows XP Icons/Briefcase.png" alt="" class="title-bar-icon">
                 <div class="title-bar-text">Portfolio</div>
@@ -520,7 +714,7 @@
                 <div class="menu-item">View</div>
                 <div class="menu-item">Tools</div>
             </div>
-            <div class="window-body" style="height: 240px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
+            <div class="window-body" style="height: 390px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
                 <h3 style="font-weight: normal; font-size: 16px; margin-bottom: 12px;">My Projects</h3>
                 
                 <div class="portfolio-item">
@@ -556,7 +750,7 @@
         </div>
 
         <!-- About Window -->
-        <div class="window" id="about-window" style="top: 150px; left: 160px; width: 380px; height: 300px; display: none;">
+        <div class="window" id="about-window" style="top: 150px; left: 160px; width: 500px; height: 450px; display: none;">
             <div class="title-bar">
                 <img src="Windows XP Icons/Favorites.png" alt="" class="title-bar-icon">
                 <div class="title-bar-text">About Brendan</div>
@@ -572,7 +766,7 @@
                 <div class="menu-item">View</div>
                 <div class="menu-item">Tools</div>
             </div>
-            <div class="window-body" style="height: 240px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
+            <div class="window-body" style="height: 390px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
                 <h3 style="font-weight: normal; font-size: 16px; margin-bottom: 12px;">About Me</h3>
                 <p>I have many skills tricks and talents</p>
                 
@@ -595,7 +789,7 @@
         </div>
 
         <!-- Contact Window -->
-        <div class="window" id="contact-window" style="top: 100px; left: 160px; width: 350px; display: none;">
+        <div class="window" id="contact-window" style="top: 100px; left: 160px; width: 450px; height: 350px; display: none;">
             <div class="title-bar">
                 <img src="Windows XP Icons/Compose a fax.png" alt="" class="title-bar-icon">
                 <div class="title-bar-text">Contact Information</div>
@@ -639,7 +833,7 @@
         </div>
 
         <!-- Interests Window -->
-        <div class="window" id="interests-window" style="top: 150px; left: 160px; width: 500px; height: 300px; display: none;">
+        <div class="window" id="interests-window" style="top: 150px; left: 160px; width: 650px; height: 500px; display: none;">
             <div class="title-bar">
                 <img src="Windows XP Icons/Appearance.png" alt="" class="title-bar-icon">
                 <div class="title-bar-text">My Interests</div>
@@ -655,7 +849,7 @@
                 <div class="menu-item">View</div>
                 <div class="menu-item">Tools</div>
             </div>
-            <div class="window-body" style="height: 240px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
+            <div class="window-body" style="height: 440px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
                 <h3 style="font-weight: normal; font-size: 16px; margin-bottom: 12px;">What I'm Into</h3>
                 
                 <div style="margin-bottom: 15px;">
@@ -927,45 +1121,62 @@
         }
 
         // Make windows draggable
+        function handleDragStart(e) {
+            if (e.target.tagName === 'BUTTON') return;
+            
+            const window = e.target.closest('.window');
+            if (!window) return;
+            
+            activeWindow = window;
+            isDragging = true;
+            
+            const rect = window.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            dragOffset.x = clientX - rect.left;
+            dragOffset.y = clientY - rect.top;
+            
+            // Bring window to front
+            bringToFront(window);
+            
+            e.preventDefault();
+        }
+
         document.querySelectorAll('.window').forEach(window => {
             const titleBar = window.querySelector('.title-bar');
-            
-            titleBar.addEventListener('mousedown', (e) => {
-                if (e.target.tagName === 'BUTTON') return;
-                
-                activeWindow = window;
-                isDragging = true;
-                
-                const rect = window.getBoundingClientRect();
-                dragOffset.x = e.clientX - rect.left;
-                dragOffset.y = e.clientY - rect.top;
-                
-                // Bring window to front
-                bringToFront(window);
-                
-                e.preventDefault();
-            });
+            titleBar.addEventListener('mousedown', handleDragStart);
+            titleBar.addEventListener('touchstart', handleDragStart);
         });
 
-        document.addEventListener('mousemove', (e) => {
+        function handleMove(e) {
             if (!isDragging || !activeWindow) return;
             
-            const x = e.clientX - dragOffset.x;
-            const y = e.clientY - dragOffset.y;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
             
-            // Keep window within viewport bounds and away from desktop icons
+            const x = clientX - dragOffset.x;
+            const y = clientY - dragOffset.y;
+            
+            // Keep window within viewport bounds
             const maxX = window.innerWidth - activeWindow.offsetWidth;
             const maxY = window.innerHeight - activeWindow.offsetHeight;
-            const minX = 140; // Reserved area width
+            const minX = window.innerWidth <= 768 ? 0 : 140; // Reserved area width only on desktop
             
             activeWindow.style.left = Math.max(minX, Math.min(x, maxX)) + 'px';
             activeWindow.style.top = Math.max(0, Math.min(y, maxY)) + 'px';
-        });
+        }
 
-        document.addEventListener('mouseup', () => {
+        document.addEventListener('mousemove', handleMove);
+        document.addEventListener('touchmove', handleMove);
+
+        function handleDragEnd() {
             isDragging = false;
             activeWindow = null;
-        });
+        }
+
+        document.addEventListener('mouseup', handleDragEnd);
+        document.addEventListener('touchend', handleDragEnd);
 
         // Window controls
         document.querySelectorAll('.title-bar-controls button').forEach(button => {
@@ -989,16 +1200,52 @@
                     // Remove active state
                     updateActiveTaskbarItem(null);
                 } else if (action === 'maximize') {
-                    if (window.style.width === '100vw') {
-                        window.style.width = '';
-                        window.style.height = '';
-                        window.style.top = '';
-                        window.style.left = '';
+                    // Check if window is already maximized (has data attribute)
+                    const isMaximized = window.dataset.maximized === 'true';
+                    
+                    if (isMaximized) {
+                        // Restore original size
+                        const originalSize = window.dataset.originalSize;
+                        if (originalSize) {
+                            const size = JSON.parse(originalSize);
+                            window.style.width = size.width;
+                            window.style.height = size.height;
+                            window.style.top = size.top;
+                            window.style.left = size.left;
+                        } else {
+                            window.style.width = '';
+                            window.style.height = '';
+                            window.style.top = '';
+                            window.style.left = '';
+                        }
+                        window.dataset.maximized = 'false';
                     } else {
-                        window.style.width = '100vw';
-                        window.style.height = 'calc(100vh - 28px)';
-                        window.style.top = '0';
-                        window.style.left = '0';
+                        // Save original size
+                        const originalSize = {
+                            width: window.style.width || window.offsetWidth + 'px',
+                            height: window.style.height || window.offsetHeight + 'px',
+                            top: window.style.top || window.offsetTop + 'px',
+                            left: window.style.left || window.offsetLeft + 'px'
+                        };
+                        window.dataset.originalSize = JSON.stringify(originalSize);
+                        
+                        // Increase size substantially (about 80% of viewport on desktop, 95% on mobile)
+                        const isMobile = window.innerWidth <= 768;
+                        const widthPercent = isMobile ? 0.95 : 0.8;
+                        const heightPercent = isMobile ? 0.9 : 0.85;
+                        const taskbarHeight = isMobile ? 40 : 28;
+                        
+                        const maxWidth = Math.min(window.innerWidth * widthPercent, 1200);
+                        const maxHeight = Math.min((window.innerHeight - taskbarHeight) * heightPercent, 800);
+                        
+                        window.style.width = maxWidth + 'px';
+                        window.style.height = maxHeight + 'px';
+                        
+                        // Center the window
+                        window.style.left = ((window.innerWidth - maxWidth) / 2) + 'px';
+                        window.style.top = ((window.innerHeight - maxHeight - taskbarHeight) / 2) + 'px';
+                        
+                        window.dataset.maximized = 'true';
                     }
                 }
             });
