@@ -219,7 +219,9 @@
             display: flex;
             align-items: center;
             flex-grow: 1;
-            justify-content: center;
+            justify-content: flex-start;
+            padding-left: 8px;
+            gap: 2px;
         }
 
         .taskbar-right {
@@ -236,15 +238,20 @@
         }
 
         .taskbar-item {
-            display: inline-block;
-            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            padding: 2px 8px;
             margin: 2px;
             background: linear-gradient(to bottom, #c0c0c0 0%, #a0a0a0 100%);
-            border: 1px solid #808080;
-            border-radius: 2px;
+            border: 1px outset #c0c0c0;
+            border-radius: 3px;
             font-size: 11px;
             color: #000;
             cursor: pointer;
+            min-width: 120px;
+            max-width: 200px;
+            height: 22px;
+            box-sizing: border-box;
         }
 
         .taskbar-item:hover {
@@ -253,7 +260,21 @@
 
         .taskbar-item.active {
             background: linear-gradient(to bottom, #ffffff 0%, #c0c0c0 100%);
-            border-color: #000080;
+            border: 1px inset #c0c0c0;
+        }
+
+        .taskbar-item-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+            flex-shrink: 0;
+        }
+
+        .taskbar-item-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
         }
 
         /* Windows XP Elements */
@@ -772,6 +793,92 @@
         let activeWindow = null;
         let isDragging = false;
         let dragOffset = { x: 0, y: 0 };
+        const openWindows = new Map(); // Track open windows: windowId -> {window element, taskbarItem element, isMinimized}
+
+        // Function to get window icon
+        function getWindowIcon(windowElement) {
+            const iconImg = windowElement.querySelector('.title-bar-icon');
+            return iconImg ? iconImg.src : '';
+        }
+
+        // Function to get window title
+        function getWindowTitle(windowElement) {
+            const titleText = windowElement.querySelector('.title-bar-text');
+            return titleText ? titleText.textContent.trim() : 'Window';
+        }
+
+        // Function to create or update taskbar item
+        function updateTaskbarItem(windowId, windowElement) {
+            const taskbarCenter = document.querySelector('.taskbar-center');
+            let taskbarItem = openWindows.get(windowId)?.taskbarItem;
+
+            if (!taskbarItem) {
+                // Create new taskbar item
+                taskbarItem = document.createElement('div');
+                taskbarItem.className = 'taskbar-item';
+                taskbarItem.dataset.windowId = windowId;
+                
+                const icon = document.createElement('img');
+                icon.className = 'taskbar-item-icon';
+                icon.src = getWindowIcon(windowElement);
+                icon.alt = '';
+                
+                const text = document.createElement('span');
+                text.className = 'taskbar-item-text';
+                text.textContent = getWindowTitle(windowElement);
+                
+                taskbarItem.appendChild(icon);
+                taskbarItem.appendChild(text);
+                
+                // Click handler for taskbar item
+                taskbarItem.addEventListener('click', () => {
+                    const winData = openWindows.get(windowId);
+                    if (winData) {
+                        if (winData.isMinimized) {
+                            // Restore window
+                            windowElement.style.display = 'block';
+                            winData.isMinimized = false;
+                        }
+                        bringToFront(windowElement);
+                    }
+                });
+                
+                taskbarCenter.appendChild(taskbarItem);
+            }
+            
+            // Update stored reference
+            if (!openWindows.has(windowId)) {
+                openWindows.set(windowId, { window: windowElement, taskbarItem: taskbarItem, isMinimized: false });
+            } else {
+                openWindows.get(windowId).taskbarItem = taskbarItem;
+            }
+            
+            return taskbarItem;
+        }
+
+        // Function to remove taskbar item
+        function removeTaskbarItem(windowId) {
+            const winData = openWindows.get(windowId);
+            if (winData && winData.taskbarItem) {
+                winData.taskbarItem.remove();
+            }
+            openWindows.delete(windowId);
+        }
+
+        // Function to update active taskbar item
+        function updateActiveTaskbarItem(activeWindowElement) {
+            document.querySelectorAll('.taskbar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            if (activeWindowElement) {
+                const windowId = activeWindowElement.id;
+                const winData = openWindows.get(windowId);
+                if (winData && winData.taskbarItem) {
+                    winData.taskbarItem.classList.add('active');
+                }
+            }
+        }
 
         // Function to open windows from desktop icons and taskbar
         function openWindow(windowId) {
@@ -780,9 +887,11 @@
                 window.style.display = 'block';
                 bringToFront(window);
                 
-                // Update taskbar item state
-                document.querySelectorAll('.taskbar-item').forEach(item => item.classList.remove('active'));
-                event.target.classList.add('active');
+                // Update or create taskbar item
+                updateTaskbarItem(windowId, window);
+                
+                // Update active state
+                updateActiveTaskbarItem(window);
             }
         }
 
@@ -790,6 +899,7 @@
         function bringToFront(window) {
             document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
             window.classList.add('active');
+            updateActiveTaskbarItem(window);
         }
 
         // Make windows draggable
@@ -837,13 +947,23 @@
         document.querySelectorAll('.title-bar-controls button').forEach(button => {
             button.addEventListener('click', (e) => {
                 const window = e.target.closest('.window');
+                const windowId = window.id;
                 const action = e.target.getAttribute('aria-label').toLowerCase();
                 
                 if (action === 'close') {
                     window.style.display = 'none';
+                    removeTaskbarItem(windowId);
+                    // Update active state if needed
+                    const activeWindow = document.querySelector('.window.active');
+                    updateActiveTaskbarItem(activeWindow);
                 } else if (action === 'minimize') {
                     window.style.display = 'none';
-                    // In a real implementation, you'd add it to the taskbar
+                    const winData = openWindows.get(windowId);
+                    if (winData) {
+                        winData.isMinimized = true;
+                    }
+                    // Remove active state
+                    updateActiveTaskbarItem(null);
                 } else if (action === 'maximize') {
                     if (window.style.width === '100vw') {
                         window.style.width = '';
@@ -911,6 +1031,15 @@
             if (welcomeWindow) {
                 welcomeWindow.style.display = 'block';
                 welcomeWindow.classList.remove('active');
+                // Add to taskbar
+                updateTaskbarItem('welcome-window', welcomeWindow);
+            }
+            
+            // Add initial welcome window to taskbar
+            const initialWelcomeWindow = document.getElementById('initial-welcome-window');
+            if (initialWelcomeWindow) {
+                updateTaskbarItem('initial-welcome-window', initialWelcomeWindow);
+                updateActiveTaskbarItem(initialWelcomeWindow);
             }
             
             // Set video volume to 30% when it loads
@@ -935,6 +1064,10 @@
             const initialWelcome = document.getElementById('initial-welcome-window');
             if (initialWelcome) {
                 initialWelcome.style.display = 'none';
+                removeTaskbarItem('initial-welcome-window');
+                // Update active state
+                const activeWindow = document.querySelector('.window.active');
+                updateActiveTaskbarItem(activeWindow);
             }
             
             // Try to play startup sound on first user interaction if it hasn't played yet
