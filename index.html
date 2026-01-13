@@ -142,16 +142,14 @@
             font-family: 'MS Sans Serif', sans-serif;
         }
 
-        /* Desktop Icons */
         .desktop-icons {
             position: absolute;
             top: 20px;
             left: 20px;
-            z-index: 5; /* Keep icons below any window */
+            z-index: 5;
             width: 120px;
         }
 
-        /* Reserved area for desktop icons */
         .desktop-reserved-area {
             position: absolute;
             top: 0;
@@ -199,7 +197,6 @@
             word-wrap: break-word;
         }
 
-        /* Taskbar styling */
         .taskbar {
             background: linear-gradient(to bottom, #000080 0%, #1084d0 50%, #000080 100%);
             border-top: 1px solid #ffffff;
@@ -277,7 +274,6 @@
             flex: 1;
         }
 
-        /* Windows XP Elements */
         .xp-button {
             background: linear-gradient(to bottom, #f0f0f0 0%, #e0e0e0 50%, #d0d0d0 100%);
             border: 1px solid #808080;
@@ -345,7 +341,7 @@
         }
 
         .window {
-            z-index: 20; /* Ensure even inactive windows sit above icons */
+            z-index: 20;
             transition: z-index 0.1s ease;
         }
 
@@ -353,7 +349,6 @@
             z-index: 1020;
         }
 
-        /* Windows XP Menu Bar */
         .menu-bar {
             background: linear-gradient(to bottom, #f0f0f0 0%, #e0e0e0 100%);
             border-bottom: 1px solid #808080;
@@ -383,7 +378,6 @@
             border: 1px solid #404040;
         }
 
-        /* Window Title Bar Icon */
         .title-bar-icon {
             width: 16px;
             height: 16px;
@@ -392,7 +386,6 @@
             vertical-align: middle;
         }
 
-        /* Title bar layout fix */
         .title-bar {
             display: flex;
             align-items: center;
@@ -403,7 +396,6 @@
             text-align: left;
         }
 
-        /* Mobile Responsiveness */
         @media (max-width: 768px) {
             body {
                 overflow-x: hidden;
@@ -426,7 +418,18 @@
                 font-size: 14px;
             }
 
-            /* Desktop icons - make them smaller and stack better */
+            #initial-welcome-window {
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+                width: calc(100vw - 40px) !important;
+                max-width: 400px;
+            }
+
+            #mobile-tip {
+                display: block !important;
+            }
+
             .desktop-icons {
                 width: 100%;
                 left: 0;
@@ -457,7 +460,6 @@
                 height: 0;
             }
 
-            /* Taskbar adjustments */
             .taskbar {
                 height: 40px;
                 flex-wrap: wrap;
@@ -500,7 +502,6 @@
                 font-size: 10px;
             }
 
-            /* Window content adjustments */
             .window-body h3,
             .window-body h4 {
                 font-size: 14px;
@@ -510,7 +511,6 @@
                 font-size: 12px;
             }
 
-            /* Photo carousels - make images smaller on mobile */
             .window-body img[style*="width: 120px"] {
                 width: 80px !important;
                 height: 60px !important;
@@ -521,24 +521,20 @@
                 height: 60px !important;
             }
 
-            /* Video adjustments */
             video {
                 max-width: 100% !important;
                 height: auto !important;
             }
 
-            /* Contact items */
             .contact-item {
                 font-size: 12px;
             }
 
-            /* Portfolio items */
             .portfolio-item {
                 padding: 8px;
                 font-size: 12px;
             }
 
-            /* Maximize button behavior on mobile - use more of screen */
             .window[data-maximized="true"] {
                 width: calc(100vw - 20px) !important;
                 height: calc(100vh - 60px) !important;
@@ -546,7 +542,6 @@
                 top: 10px !important;
             }
 
-            /* Photo modal adjustments */
             #photo-modal {
                 padding: 10px;
             }
@@ -560,7 +555,6 @@
                 max-height: 60vh !important;
             }
 
-            /* Start button */
             .start-button {
                 padding: 6px 12px;
                 font-size: 11px;
@@ -646,12 +640,15 @@
                 <p style="font-size: 13px; line-height: 1.4; margin: 0 0 15px 0; font-weight: bold; color: #000080;">
                     <strong>Tip: You can drag windows by clicking and holding the title bar, and resize them using the maximize button!</strong>
                 </p>
+                <p id="mobile-tip" style="font-size: 11px; line-height: 1.4; margin: 0 0 15px 0; color: #666; display: none;">
+                    <strong>Mobile tip: Drag the title bar to move windows.</strong>
+                </p>
                 <button class="xp-button" onclick="closeInitialWelcome()" style="width: 100%;">Okay, got it</button>
             </div>
         </div>
 
         <!-- Welcome Window -->
-        <div class="window" id="welcome-window" style="top: 50px; left: 160px; width: 550px; height: 450px;">
+        <div class="window" id="welcome-window" style="top: 50px; left: 160px; width: 550px; height: 500px;">
             <div class="title-bar">
                 <img src="Windows XP Icons/My Computer.png" alt="" class="title-bar-icon">
                 <div class="title-bar-text">Welcome to My Page</div>
@@ -667,7 +664,7 @@
                 <div class="menu-item">View</div>
                 <div class="menu-item">Tools</div>
             </div>
-            <div class="window-body">
+            <div class="window-body" style="overflow-y: auto; height: calc(100% - 40px);">
                 <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
                     <img src="misc images/headshot cropped.JPG" alt="Brendan" style="width: 100px; height: 100px; border-radius: 50%; border: 2px solid #ccc;">
                     <h2 style="font-weight: normal; font-size: 18px; margin: 0;">Hi, I'm Brendan</h2>
@@ -688,9 +685,9 @@
                         </p>
                     </div>
             
-                    <div style="margin-top: 10px;">
-                        <a href="https://open.spotify.com/user/brendansarpong" target="_blank" rel="noopener" style="color: #1db954; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify" style="width: 18px; height: 18px; vertical-align: middle;"> My Spotify (I have great taste)
+                    <div style="margin-top: 10px; margin-bottom: 10px;">
+                        <a href="https://open.spotify.com/user/brendansarpong" target="_blank" rel="noopener" style="color: #1db954; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 6px; word-wrap: break-word;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify" style="width: 18px; height: 18px; vertical-align: middle; flex-shrink: 0;"> <span>My Spotify (I have great taste)</span>
                         </a>
                     </div>
                 </div>
@@ -977,11 +974,9 @@
     </div>
 
     <script>
-        // Audio element for Windows XP startup sound
         const startupSound = new Audio('Microsoft Windows XP Startup Sound.mp3');
-        startupSound.volume = 0.5; // Set volume to 50%
+        startupSound.volume = 0.5;
         
-        // Debug audio loading
         startupSound.addEventListener('canplaythrough', () => {
             console.log('Audio loaded successfully');
         });
@@ -990,16 +985,13 @@
             console.log('Audio loading error:', e);
         });
         
-        // Play startup sound when page loads
         window.addEventListener('load', () => {
             console.log('Page loaded, attempting to play audio...');
-            // Small delay to ensure everything is loaded
             setTimeout(() => {
                 startupSound.play().then(() => {
                     console.log('Audio played successfully');
                 }).catch(error => {
                     console.log('Audio playback prevented by browser:', error);
-                    // Try playing on first user interaction
                     document.addEventListener('click', () => {
                         startupSound.play().catch(e => console.log('Still blocked:', e));
                     }, { once: true });
@@ -1007,31 +999,26 @@
             }, 500);
         });
         
-        // Draggable window functionality
         let activeWindow = null;
         let isDragging = false;
         let dragOffset = { x: 0, y: 0 };
-        const openWindows = new Map(); // Track open windows: windowId -> {window element, taskbarItem element, isMinimized}
+        const openWindows = new Map();
 
-        // Function to get window icon
         function getWindowIcon(windowElement) {
             const iconImg = windowElement.querySelector('.title-bar-icon');
             return iconImg ? iconImg.src : '';
         }
 
-        // Function to get window title
         function getWindowTitle(windowElement) {
             const titleText = windowElement.querySelector('.title-bar-text');
             return titleText ? titleText.textContent.trim() : 'Window';
         }
 
-        // Function to create or update taskbar item
         function updateTaskbarItem(windowId, windowElement) {
             const taskbarCenter = document.querySelector('.taskbar-center');
             let taskbarItem = openWindows.get(windowId)?.taskbarItem;
 
             if (!taskbarItem) {
-                // Create new taskbar item
                 taskbarItem = document.createElement('div');
                 taskbarItem.className = 'taskbar-item';
                 taskbarItem.dataset.windowId = windowId;
@@ -1048,12 +1035,10 @@
                 taskbarItem.appendChild(icon);
                 taskbarItem.appendChild(text);
                 
-                // Click handler for taskbar item
                 taskbarItem.addEventListener('click', () => {
                     const winData = openWindows.get(windowId);
                     if (winData) {
                         if (winData.isMinimized) {
-                            // Restore window
                             windowElement.style.display = 'block';
                             winData.isMinimized = false;
                         }
@@ -1064,7 +1049,6 @@
                 taskbarCenter.appendChild(taskbarItem);
             }
             
-            // Update stored reference
             if (!openWindows.has(windowId)) {
                 openWindows.set(windowId, { window: windowElement, taskbarItem: taskbarItem, isMinimized: false });
             } else {
@@ -1074,7 +1058,6 @@
             return taskbarItem;
         }
 
-        // Function to remove taskbar item
         function removeTaskbarItem(windowId) {
             const winData = openWindows.get(windowId);
             if (winData && winData.taskbarItem) {
@@ -1083,7 +1066,6 @@
             openWindows.delete(windowId);
         }
 
-        // Function to update active taskbar item
         function updateActiveTaskbarItem(activeWindowElement) {
             document.querySelectorAll('.taskbar-item').forEach(item => {
                 item.classList.remove('active');
@@ -1098,29 +1080,22 @@
             }
         }
 
-        // Function to open windows from desktop icons and taskbar
         function openWindow(windowId) {
             const window = document.getElementById(windowId);
             if (window) {
                 window.style.display = 'block';
                 bringToFront(window);
-                
-                // Update or create taskbar item
                 updateTaskbarItem(windowId, window);
-                
-                // Update active state
                 updateActiveTaskbarItem(window);
             }
         }
 
-        // Function to bring window to front
         function bringToFront(window) {
             document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
             window.classList.add('active');
             updateActiveTaskbarItem(window);
         }
 
-        // Make windows draggable
         function handleDragStart(e) {
             if (e.target.tagName === 'BUTTON') return;
             
@@ -1137,7 +1112,6 @@
             dragOffset.x = clientX - rect.left;
             dragOffset.y = clientY - rect.top;
             
-            // Bring window to front
             bringToFront(window);
             
             e.preventDefault();
@@ -1158,10 +1132,9 @@
             const x = clientX - dragOffset.x;
             const y = clientY - dragOffset.y;
             
-            // Keep window within viewport bounds
             const maxX = window.innerWidth - activeWindow.offsetWidth;
             const maxY = window.innerHeight - activeWindow.offsetHeight;
-            const minX = window.innerWidth <= 768 ? 0 : 140; // Reserved area width only on desktop
+            const minX = window.innerWidth <= 768 ? 0 : 140;
             
             activeWindow.style.left = Math.max(minX, Math.min(x, maxX)) + 'px';
             activeWindow.style.top = Math.max(0, Math.min(y, maxY)) + 'px';
@@ -1178,7 +1151,6 @@
         document.addEventListener('mouseup', handleDragEnd);
         document.addEventListener('touchend', handleDragEnd);
 
-        // Window controls
         document.querySelectorAll('.title-bar-controls button').forEach(button => {
             button.addEventListener('click', (e) => {
                 const window = e.target.closest('.window');
@@ -1188,7 +1160,6 @@
                 if (action === 'close') {
                     window.style.display = 'none';
                     removeTaskbarItem(windowId);
-                    // Update active state if needed
                     const activeWindow = document.querySelector('.window.active');
                     updateActiveTaskbarItem(activeWindow);
                 } else if (action === 'minimize') {
@@ -1197,14 +1168,11 @@
                     if (winData) {
                         winData.isMinimized = true;
                     }
-                    // Remove active state
                     updateActiveTaskbarItem(null);
                 } else if (action === 'maximize') {
-                    // Check if window is already maximized (has data attribute)
                     const isMaximized = window.dataset.maximized === 'true';
                     
                     if (isMaximized) {
-                        // Restore original size
                         const originalSize = window.dataset.originalSize;
                         if (originalSize) {
                             const size = JSON.parse(originalSize);
@@ -1212,24 +1180,27 @@
                             window.style.height = size.height;
                             window.style.top = size.top;
                             window.style.left = size.left;
+                            window.style.transform = size.transform || '';
                         } else {
                             window.style.width = '';
                             window.style.height = '';
                             window.style.top = '';
                             window.style.left = '';
+                            window.style.transform = '';
                         }
                         window.dataset.maximized = 'false';
                     } else {
-                        // Save original size
                         const originalSize = {
                             width: window.style.width || window.offsetWidth + 'px',
                             height: window.style.height || window.offsetHeight + 'px',
-                            top: window.style.top || window.offsetTop + 'px',
-                            left: window.style.left || window.offsetLeft + 'px'
+                            top: window.style.top || (window.offsetTop + 'px'),
+                            left: window.style.left || (window.offsetLeft + 'px'),
+                            transform: window.style.transform || ''
                         };
                         window.dataset.originalSize = JSON.stringify(originalSize);
                         
-                        // Increase size substantially (about 80% of viewport on desktop, 95% on mobile)
+                        window.style.transform = '';
+                        
                         const isMobile = window.innerWidth <= 768;
                         const widthPercent = isMobile ? 0.95 : 0.8;
                         const heightPercent = isMobile ? 0.9 : 0.85;
@@ -1241,7 +1212,6 @@
                         window.style.width = maxWidth + 'px';
                         window.style.height = maxHeight + 'px';
                         
-                        // Center the window
                         window.style.left = ((window.innerWidth - maxWidth) / 2) + 'px';
                         window.style.top = ((window.innerHeight - maxHeight - taskbarHeight) / 2) + 'px';
                         
@@ -1251,7 +1221,6 @@
             });
         });
 
-        // Desktop icon selection
         document.querySelectorAll('.desktop-icon').forEach(icon => {
             icon.addEventListener('click', () => {
                 document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
@@ -1259,7 +1228,6 @@
             });
         });
 
-        // Clock functionality
         function updateClock() {
             const now = new Date();
             const timeString = now.toLocaleTimeString('en-US', {
@@ -1273,12 +1241,10 @@
         updateClock();
         setInterval(updateClock, 1000);
 
-        // Start button functionality
         document.querySelector('.start-button').addEventListener('click', () => {
             location.reload();
         });
 
-        // Click to focus windows
         document.querySelectorAll('.window').forEach(window => {
             window.addEventListener('click', (e) => {
                 if (!e.target.closest('.title-bar-controls')) {
@@ -1287,7 +1253,6 @@
             });
         });
 
-        // Click outside to deselect
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.window') && !e.target.closest('.desktop-icon')) {
                 document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
@@ -1295,33 +1260,42 @@
             }
         });
 
-        // Initialize windows - show welcome window behind the initial welcome window
         document.addEventListener('DOMContentLoaded', () => {
-            // Show welcome window behind the initial welcome window
             const welcomeWindow = document.getElementById('welcome-window');
             if (welcomeWindow) {
                 welcomeWindow.style.display = 'block';
                 welcomeWindow.classList.remove('active');
-                // Add to taskbar
                 updateTaskbarItem('welcome-window', welcomeWindow);
             }
             
-            // Add initial welcome window to taskbar
             const initialWelcomeWindow = document.getElementById('initial-welcome-window');
             if (initialWelcomeWindow) {
                 updateTaskbarItem('initial-welcome-window', initialWelcomeWindow);
                 updateActiveTaskbarItem(initialWelcomeWindow);
+                
+                if (window.innerWidth <= 768) {
+                    initialWelcomeWindow.style.top = '50%';
+                    initialWelcomeWindow.style.left = '50%';
+                    initialWelcomeWindow.style.transform = 'translate(-50%, -50%)';
+                }
             }
             
-            // Set video volume to 30% when it loads
+            const mobileTip = document.getElementById('mobile-tip');
+            if (mobileTip) {
+                if (window.innerWidth <= 768) {
+                    mobileTip.style.display = 'block';
+                } else {
+                    mobileTip.style.display = 'none';
+                }
+            }
+            
             const video = document.querySelector('video');
             if (video) {
                 video.addEventListener('loadedmetadata', () => {
-                    video.volume = 0.3; // Set volume to 30%
+                    video.volume = 0.3;
                 });
             }
             
-            // Animate portfolio progress bar
             setTimeout(() => {
                 const progressBar = document.getElementById('portfolio-progress');
                 if (progressBar) {
@@ -1330,18 +1304,15 @@
             }, 1000);
         });
 
-        // Function to close initial welcome window
         function closeInitialWelcome() {
             const initialWelcome = document.getElementById('initial-welcome-window');
             if (initialWelcome) {
                 initialWelcome.style.display = 'none';
                 removeTaskbarItem('initial-welcome-window');
-                // Update active state
                 const activeWindow = document.querySelector('.window.active');
                 updateActiveTaskbarItem(activeWindow);
             }
             
-            // Try to play startup sound on first user interaction if it hasn't played yet
             if (startupSound.paused) {
                 startupSound.play().then(() => {
                     console.log('Audio played on user interaction');
@@ -1349,7 +1320,6 @@
             }
         }
 
-        // Photo modal functions
         function openPhotoModal(imageSrc, title) {
             const modal = document.getElementById('photo-modal');
             const modalImage = document.getElementById('modal-image');
@@ -1365,7 +1335,6 @@
             modal.style.display = 'none';
         }
 
-        // Close modal when clicking outside
         document.getElementById('photo-modal').addEventListener('click', (e) => {
             if (e.target.id === 'photo-modal') {
                 closePhotoModal();
