@@ -272,6 +272,13 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             flex: 1;
+            font-size: 16px;
+        }
+
+        .taskbar-item[data-window-id="welcome-window"] .taskbar-item-text,
+        .taskbar-item[data-window-id="initial-welcome-window"] .taskbar-item-text {
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .xp-button {
@@ -619,6 +626,10 @@
                 <img src="Windows XP Icons/Appearance.png" alt="Interests">
                 <span>Interests</span>
             </div>
+            <div class="desktop-icon" onclick="openWindow('photography-window')">
+                <img src="Windows XP Icons/My Pictures.png" alt="Photography">
+                <span>Photography</span>
+            </div>
         </div>
 
         <!-- Initial Welcome Window -->
@@ -648,7 +659,7 @@
         </div>
 
         <!-- Welcome Window -->
-        <div class="window" id="welcome-window" style="top: 50px; left: 160px; width: 550px; height: 500px;">
+        <div class="window" id="welcome-window" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 550px; height: 500px;">
             <div class="title-bar">
                 <img src="Windows XP Icons/My Computer.png" alt="" class="title-bar-icon">
                 <div class="title-bar-text">Welcome to My Page</div>
@@ -850,31 +861,6 @@
                 <h3 style="font-weight: normal; font-size: 16px; margin-bottom: 12px;">What I'm Into</h3>
                 
                 <div style="margin-bottom: 15px;">
-                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;">Film Photography</h4>
-                    <p style="margin-bottom: 8px; font-size: 12px;">I use an old canon sureshot supreme and the minolta freedom zoom</p>
-                    
-                    <!-- Film Photos Carousel -->
-                    <div style="background: #f0f0f0; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-                        <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;">
-                            <img src="film pics/put this one first.JPG" alt="Film Photo 1" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/put this one first.JPG', 'Film Photo 1')">
-                            <img src="film pics/entering the aether.JPG" alt="Film Photo 2" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/entering the aether.JPG', 'Film Photo 2')">
-                            <img src="film pics/friends.JPG" alt="Film Photo 3" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/friends.JPG', 'Film Photo 3')">
-                            <img src="film pics/peeking window.JPG" alt="Film Photo 4" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/peeking window.JPG', 'Film Photo 4')">
-                            <img src="film pics/triple heads.JPG" alt="Film Photo 5" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/triple heads.JPG', 'Film Photo 5')">
-                            <img src="film pics/red car.jpeg" alt="Film Photo 6" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/red car.jpeg', 'Film Photo 6')">
-                            <img src="film pics/IMG_2300.jpeg" alt="Film Photo 7" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/IMG_2300.jpeg', 'Film Photo 7')">
-                            <img src="film pics/painted ladies.jpg" alt="Film Photo 8" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/painted ladies.jpg', 'Film Photo 8')">
-                            <img src="film pics/cali mountains 1.png" alt="Film Photo 9" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/cali mountains 1.png', 'Film Photo 9')">
-                            <img src="film pics/cali mountains 2.png" alt="Film Photo 10" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/cali mountains 2.png', 'Film Photo 10')">
-                            <img src="film pics/000053980018.jpg" alt="Film Photo 11" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/000053980018.jpg', 'Film Photo 11')">
-                            <img src="misc images/cayman_car.jpeg" alt="Cayman Car" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('misc images/cayman_car.jpeg', 'Cayman Car')">
-                            <img src="misc images/cayman_friends.jpeg" alt="Cayman Friends" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('misc images/cayman_friends.jpeg', 'Cayman Friends')">
-                        </div>
-                        <p style="font-size: 10px; color: #666; margin: 5px 0 0 0;">Click any photo to view full size →</p>
-                    </div>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
                     <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;"> Camcorder Videos</h4>
                     <p style="margin-bottom: 8px; font-size: 12px;">I use the canon es8600v. check this video of me and my friend from a couple years back.</p>
                     <video controls muted style="width: 200px; height: 150px; border: 1px solid #999; margin-bottom: 5px;">
@@ -944,6 +930,49 @@
                     </div>
                 </div>
             </div>
+            </div>
+        </div>
+
+        <!-- Photography Window -->
+        <div class="window" id="photography-window" style="top: 150px; left: 160px; width: 650px; height: 500px; display: none;">
+            <div class="title-bar">
+                <img src="Windows XP Icons/My Pictures.png" alt="" class="title-bar-icon">
+                <div class="title-bar-text">Photography</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="menu-bar">
+                <div class="menu-item">File</div>
+                <div class="menu-item">Edit</div>
+                <div class="menu-item">View</div>
+                <div class="menu-item">Tools</div>
+            </div>
+            <div class="window-body" style="height: 440px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
+                <h3 style="font-weight: normal; font-size: 16px; margin-bottom: 12px;">Film Photography</h3>
+                <p style="margin-bottom: 8px; font-size: 12px;">I use an old canon sureshot supreme and the minolta freedom zoom</p>
+                
+                <!-- Film Photos Carousel -->
+                <div style="background: #f0f0f0; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+                    <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;">
+                        <img src="film pics/put this one first.JPG" alt="Film Photo 1" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/put this one first.JPG', 'Film Photo 1')">
+                        <img src="film pics/entering the aether.JPG" alt="Film Photo 2" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/entering the aether.JPG', 'Film Photo 2')">
+                        <img src="film pics/friends.JPG" alt="Film Photo 3" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/friends.JPG', 'Film Photo 3')">
+                        <img src="film pics/peeking window.JPG" alt="Film Photo 4" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/peeking window.JPG', 'Film Photo 4')">
+                        <img src="film pics/triple heads.JPG" alt="Film Photo 5" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/triple heads.JPG', 'Film Photo 5')">
+                        <img src="film pics/red car.jpeg" alt="Film Photo 6" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/red car.jpeg', 'Film Photo 6')">
+                        <img src="film pics/IMG_2300.jpeg" alt="Film Photo 7" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/IMG_2300.jpeg', 'Film Photo 7')">
+                        <img src="film pics/painted ladies.jpg" alt="Film Photo 8" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/painted ladies.jpg', 'Film Photo 8')">
+                        <img src="film pics/cali mountains 1.png" alt="Film Photo 9" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/cali mountains 1.png', 'Film Photo 9')">
+                        <img src="film pics/cali mountains 2.png" alt="Film Photo 10" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/cali mountains 2.png', 'Film Photo 10')">
+                        <img src="film pics/000053980018.jpg" alt="Film Photo 11" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/000053980018.jpg', 'Film Photo 11')">
+                        <img src="misc images/cayman_car.jpeg" alt="Cayman Car" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('misc images/cayman_car.jpeg', 'Cayman Car')">
+                        <img src="misc images/cayman_friends.jpeg" alt="Cayman Friends" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('misc images/cayman_friends.jpeg', 'Cayman Friends')">
+                    </div>
+                    <p style="font-size: 10px; color: #666; margin: 5px 0 0 0;">Click any photo to view full size →</p>
+                </div>
             </div>
         </div>
 
@@ -1105,6 +1134,14 @@
             activeWindow = window;
             isDragging = true;
             
+            // Remove transform if present (for centered windows)
+            if (window.style.transform && window.style.transform.includes('translate')) {
+                const rect = window.getBoundingClientRect();
+                window.style.left = rect.left + 'px';
+                window.style.top = rect.top + 'px';
+                window.style.transform = '';
+            }
+            
             const rect = window.getBoundingClientRect();
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             const clientY = e.touches ? e.touches[0].clientY : e.clientY;
@@ -1132,8 +1169,9 @@
             const x = clientX - dragOffset.x;
             const y = clientY - dragOffset.y;
             
+            const taskbarHeight = window.innerWidth <= 768 ? 40 : 28;
             const maxX = window.innerWidth - activeWindow.offsetWidth;
-            const maxY = window.innerHeight - activeWindow.offsetHeight;
+            const maxY = window.innerHeight - activeWindow.offsetHeight - taskbarHeight;
             const minX = window.innerWidth <= 768 ? 0 : 140;
             
             activeWindow.style.left = Math.max(minX, Math.min(x, maxX)) + 'px';
