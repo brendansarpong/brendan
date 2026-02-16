@@ -272,13 +272,6 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             flex: 1;
-            font-size: 16px;
-        }
-
-        .taskbar-item[data-window-id="welcome-window"] .taskbar-item-text,
-        .taskbar-item[data-window-id="initial-welcome-window"] .taskbar-item-text {
-            font-size: 20px;
-            font-weight: bold;
         }
 
         .xp-button {
@@ -431,6 +424,14 @@
                 transform: translate(-50%, -50%) !important;
                 width: calc(100vw - 40px) !important;
                 max-width: 400px;
+            }
+
+            #welcome-window {
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+                width: calc(100vw - 40px) !important;
+                max-width: 500px;
             }
 
             #mobile-tip {
@@ -644,12 +645,12 @@
                 </div>
             </div>
             <div class="window-body">
-                <h2 style="font-weight: normal; font-size: 16px; margin: 0 0 15px 0;">Hi, welcome to my page</h2>
-                <p style="font-size: 12px; line-height: 1.4; margin: 0 0 15px 0;">
+                <h2 style="font-weight: normal; font-size: 22px; margin: 0 0 15px 0;">Hi, welcome to my page</h2>
+                <p style="font-size: 16px; line-height: 1.4; margin: 0 0 15px 0;">
                     Click on the desktop icons to explore the site 
                 </p>
-                <p style="font-size: 13px; line-height: 1.4; margin: 0 0 15px 0; font-weight: bold; color: #000080;">
-                    <strong>Tip: You can drag windows by clicking and holding the title bar, and resize them using the maximize button!</strong>
+                <p style="font-size: 16px; line-height: 1.4; margin: 0 0 15px 0; font-weight: bold; color: #000080;">
+                    <strong>Tip: Drag windows by clicking and holding the title bar, and resize them using the maximize button</strong>
                 </p>
                 <p id="mobile-tip" style="font-size: 11px; line-height: 1.4; margin: 0 0 15px 0; color: #666; display: none;">
                     <strong>Mobile tip: Drag the title bar to move windows.</strong>
@@ -659,7 +660,7 @@
         </div>
 
         <!-- Welcome Window -->
-        <div class="window" id="welcome-window" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 550px; height: 500px;">
+        <div class="window" id="welcome-window" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 600px;">
             <div class="title-bar">
                 <img src="Windows XP Icons/My Computer.png" alt="" class="title-bar-icon">
                 <div class="title-bar-text">Welcome to My Page</div>
@@ -678,27 +679,27 @@
             <div class="window-body" style="overflow-y: auto; height: calc(100% - 40px);">
                 <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
                     <img src="misc images/headshot cropped.JPG" alt="Brendan" style="width: 100px; height: 100px; border-radius: 50%; border: 2px solid #ccc;">
-                    <h2 style="font-weight: normal; font-size: 18px; margin: 0;">Hi, I'm Brendan</h2>
+                    <h2 style="font-weight: normal; font-size: 24px; margin: 0;">Hi, I'm Brendan</h2>
                 </div>
-                <p>Wassup <br> <br>I like computers</p>
+                <p style="font-size: 20px; line-height: 1.6; margin-bottom: 15px;"> Wassup </p>
                 
                 <div class="contact-info">
-                    <h3 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;">Explore My Site</h3>
-                    <p style="font-size: 12px; margin-bottom: 15px; line-height: 1.4;">
-                        Click on the desktop icons (portfolio, about me, etc.) to learn more about me.
+                    <h3 style="font-weight: normal; font-size: 18px; margin-bottom: 8px;">Explore My Site</h3>
+                    <p style="font-size: 16px; margin-bottom: 15px; line-height: 1.4;">
+                        Click on the desktop icons to learn more about me.
                     </p>
                     
                     <div style="background: #f0f0f0; border: 1px solid #ccc; padding: 12px; margin-bottom: 15px;">
-                        <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;">About Me</h4>
-                        <p style="font-size: 12px; margin: 0; line-height: 1.4;">
+                        <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;">About Me</h4>
+                        <p style="font-size: 16px; margin: 0; line-height: 1.4;">
                             I'm a student at Columbia University studying computer science with a minor in African Studies <br> <br>
-                            I'm currently working as a tech intern at AMC Networks 
+                           My last role was in tech at AMC Networks. 
                         </p>
                     </div>
             
                     <div style="margin-top: 10px; margin-bottom: 10px;">
-                        <a href="https://open.spotify.com/user/brendansarpong" target="_blank" rel="noopener" style="color: #1db954; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 6px; word-wrap: break-word;">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify" style="width: 18px; height: 18px; vertical-align: middle; flex-shrink: 0;"> <span>My Spotify (I have great taste)</span>
+                        <a href="https://open.spotify.com/user/brendansarpong" target="_blank" rel="noopener" style="color: #1db954; font-size: 16px; text-decoration: none; display: flex; align-items: center; gap: 6px; word-wrap: break-word;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify" style="width: 20px; height: 20px; vertical-align: middle; flex-shrink: 0;"> <span>My Spotify (I have great taste)</span>
                         </a>
                     </div>
                 </div>
@@ -723,42 +724,42 @@
                 <div class="menu-item">Tools</div>
             </div>
             <div class="window-body" style="height: 390px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
-                <h3 style="font-weight: normal; font-size: 16px; margin-bottom: 12px;">My Projects</h3>
+                <h3 style="font-weight: normal; font-size: 18px; margin-bottom: 12px;">My Projects</h3>
                 
                 <div class="portfolio-item">
-                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 5px;">Sample Search</h4>
-                    <p>A fun game I made that teaches you how to identify samples in hip hop songs. Made for a Columbia UI Design course</p>
-                    <a href="https://brendan-sarpong.github.io/samplesearch/" target="_blank" rel="noopener">View Project →</a>
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">Sample Search</h4>
+                    <p style="font-size: 16px;">A fun game I made that teaches you how to identify samples in hip hop songs. Made for a Columbia UI Design course</p>
+                    <a href="https://brendan-sarpong.github.io/samplesearch/" target="_blank" rel="noopener" style="font-size: 16px;">View Project →</a>
                 </div>
 
                 <div class="portfolio-item">
-                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 5px;">GTS Misinformation Site</h4>
-                    <p>This site houses a curriculum I made for a research project on misinformation.</p>
-                    <a href="https://brendansarpong.github.io/gts-misinfo/" target="_blank" rel="noopener">View Project →</a>
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">GTS Misinformation Site</h4>
+                    <p style="font-size: 16px;">This site houses a curriculum I made for a research project on misinformation.</p>
+                    <a href="https://brendansarpong.github.io/gts-misinfo/" target="_blank" rel="noopener" style="font-size: 16px;">View Project →</a>
                 </div>
 
                 <div class="portfolio-item">
-                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 5px;">Surgery Turnover Time App</h4>
-                    <p>Me and my bud developed an app with doctors from the Spine Institute of San Diego that helps doctors reduce turnover time between surgeries, allowing them to help more people. <br> We coded it in React Native and used Firebase for the backend.</p>
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">Surgery Turnover Time App</h4>
+                    <p style="font-size: 16px;">Me and my bud developed an app with doctors from the Spine Institute of San Diego that helps doctors reduce turnover time between surgeries, allowing them to help more people. <br> We coded it in React Native and used Firebase for the backend.</p>
                 </div>
 
                 <div class="portfolio-item">
-                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 5px;">Gr8 Eagle Cyber</h4>
-                    <p>I interned at a cybersecurity startup called Gr8 Eagle Cyber. In addition to my Security Intern role, I also worked on the website and marketing.</p>
-                    <a href="https://gr8eaglecyber.com/"  target="_blank" rel="noopener">View Site →</a>
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">Gr8 Eagle Cyber</h4>
+                    <p style="font-size: 16px;">I interned at a cybersecurity startup called Gr8 Eagle Cyber. In addition to my Security Intern role, I also worked on the website and marketing.</p>
+                    <a href="https://gr8eaglecyber.com/"  target="_blank" rel="noopener" style="font-size: 16px;">View Site →</a>
                 </div>
 
                 <div class="portfolio-item">
-                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 5px;">Amateur Game Design</h4>
-                    <p>I used to make (bad) games in my free time. Here's one of them from years ago. Warning: rough around the edges</p>
-                    <a href="https://notbrendan.itch.io/updog"  target="_blank" rel="noopener">View Site →</a>
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">Amateur Game Design</h4>
+                    <p style="font-size: 16px;">I used to make (bad) games in my free time. Here's one of them from years ago. Warning: rough around the edges</p>
+                    <a href="https://notbrendan.itch.io/updog"  target="_blank" rel="noopener" style="font-size: 16px;">View Site →</a>
                 </div>
                 
             </div>
         </div>
 
         <!-- About Window -->
-        <div class="window" id="about-window" style="top: 150px; left: 160px; width: 500px; height: 450px; display: none;">
+        <div class="window" id="about-window" style="top: 150px; left: 160px; width: 550px; height: 500px; display: none;">
             <div class="title-bar">
                 <img src="Windows XP Icons/Favorites.png" alt="" class="title-bar-icon">
                 <div class="title-bar-text">About Brendan</div>
@@ -774,30 +775,30 @@
                 <div class="menu-item">View</div>
                 <div class="menu-item">Tools</div>
             </div>
-            <div class="window-body" style="height: 390px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
-                <h3 style="font-weight: normal; font-size: 16px; margin-bottom: 12px;">About Me</h3>
-                <p>I have many skills tricks and talents</p>
+            <div class="window-body" style="height: 440px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
+                <h3 style="font-weight: normal; font-size: 18px; margin-bottom: 12px;">About Me</h3>
+                <p style="font-size: 16px;">I have many skills tricks and talents</p>
                 
-                <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;">Skills & Technologies</h4>
-                <ul>
+                <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;">Skills & Technologies</h4>
+                <ul style="font-size: 16px;">
                     <li>Frontend: React, HTML5, CSS, JavaScript</li>
                     <li>Backend: Python, Java, C</li>
                     <li>Tools: Git, AWS, Figma, Blender</li>
                     <li>Other: Game Development, UI/UX Design, Cybersecurity, Video Editing</li>
                 </ul>
 
-                <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;">Experience</h4>
-                <p>I started off coding in HTML, CSS, and JavaScript about 7 years ago. Since then I've built mobile games, created websites, and pursued cybersecurity as a career.</p>
+                <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;">Experience</h4>
+                <p style="font-size: 16px;">I started off coding in HTML, CSS, and JavaScript about 7 years ago. Since then I've built mobile games, created websites, and pursued cybersecurity as a career.</p>
 
-                <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;">Interests</h4>
-                <p>When I'm not working or in school, I love film photography, skateboarding, movies, music, Better Call Saul, fashion, and soccer (any Chelsea fans?)</p>
+                <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;">Interests</h4>
+                <p style="font-size: 16px;">When I'm not working or in school, I love film photography, skateboarding, movies, music, Better Call Saul, fashion, and soccer (any Chelsea fans?)</p>
                 
              
             </div>
         </div>
 
         <!-- Contact Window -->
-        <div class="window" id="contact-window" style="top: 100px; left: 160px; width: 450px; height: 350px; display: none;">
+        <div class="window" id="contact-window" style="top: 100px; left: 160px; width: 500px; height: 400px; display: none;">
             <div class="title-bar">
                 <img src="Windows XP Icons/Compose a fax.png" alt="" class="title-bar-icon">
                 <div class="title-bar-text">Contact Information</div>
@@ -813,24 +814,24 @@
                 <div class="menu-item">View</div>
                 <div class="menu-item">Tools</div>
             </div>
-            <div class="window-body">
-                <h3 style="font-weight: normal; font-size: 16px; margin-bottom: 12px;">Get In Touch</h3>
-                <p>Reach out to me any time on the platforms below:</p>
+            <div class="window-body" style="padding: 15px;">
+                <h3 style="font-weight: normal; font-size: 18px; margin-bottom: 10px;">Get In Touch</h3>
+                <p style="font-size: 16px; margin-bottom: 12px;">Reach out to me any time on the platforms below:</p>
                 
-                <div class="contact-info">
-                    <div class="contact-item">
+                <div class="contact-info" style="margin-top: 10px;">
+                    <div class="contact-item" style="font-size: 16px; margin-bottom: 8px;">
                         <span class="contact-icon"></span>
                         <span><strong>Email:</strong> brendansarpong@gmail.com</span>
                     </div>
-                    <div class="contact-item">
+                    <div class="contact-item" style="font-size: 16px; margin-bottom: 8px;">
                         <span class="contact-icon"></span>
                         <span><strong>Phone:</strong> don't worry about it</span>
                     </div>
-                    <div class="contact-item">
+                    <div class="contact-item" style="font-size: 16px; margin-bottom: 8px;">
                         <span class="contact-icon"></span>
                         <span><strong>LinkedIn:</strong> linkedin.com/in/brendansarpong</span>
                     </div>
-                    <div class="contact-item">
+                    <div class="contact-item" style="font-size: 16px; margin-bottom: 8px;">
                         <span class="contact-icon"></span>
                         <span><strong>GitHub:</strong> github.com/brendansarpong</span>
                     </div>
@@ -858,11 +859,11 @@
                 <div class="menu-item">Tools</div>
             </div>
             <div class="window-body" style="height: 440px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
-                <h3 style="font-weight: normal; font-size: 16px; margin-bottom: 12px;">What I'm Into</h3>
+                <h3 style="font-weight: normal; font-size: 18px; margin-bottom: 12px;">What I'm Into</h3>
                 
                 <div style="margin-bottom: 15px;">
-                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;"> Camcorder Videos</h4>
-                    <p style="margin-bottom: 8px; font-size: 12px;">I use the canon es8600v. check this video of me and my friend from a couple years back.</p>
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;"> Camcorder Videos</h4>
+                    <p style="margin-bottom: 8px; font-size: 16px;">I use the canon es8600v. check this video of me and my friend from a couple years back.</p>
                     <video controls muted style="width: 200px; height: 150px; border: 1px solid #999; margin-bottom: 5px;">
                         <source src="misc images/camcorder video snippet.mp4" type="video/mp4">
                         Your browser does not support the video tag.
@@ -871,21 +872,21 @@
                 </div>
                 
                 <div style="margin-bottom: 15px;">
-                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;"> Soccer</h4>
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;"> Soccer</h4>
                     <img src="misc images/palmer10.jpg" alt="Palmer 10" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; display: block; margin-bottom: 5px; cursor: pointer;" onclick="openPhotoModal('misc images/palmer10.jpg', 'Palmer 10')">
-                    <p style="font-size: 10px; color: #666; margin: 0 0 0 0;">Click to view full size →</p>
+                    <p style="font-size: 12px; color: #666; margin: 0 0 0 0;">Click to view full size →</p>
                 </div>
                 
                 <div style="margin-bottom: 15px;">
-                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;"> Skating</h4>
-                    <p style="margin-bottom: 8px; font-size: 12px;">Peep the board (shoutout Chris from Upper West Skates)</p>
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;"> Skating</h4>
+                    <p style="margin-bottom: 8px; font-size: 16px;">Peep the board (shoutout Chris from Upper West Skates)</p>
                     <img src="misc images/skateboard.jpg" alt="Skateboard" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; display: block; margin-bottom: 5px; cursor: pointer;" onclick="openPhotoModal('misc images/skateboard.jpg', 'Skateboard')">
                     <p style="font-size: 10px; color: #666; margin: 0 0 0 0;">Click to view full size →</p>
                 </div>
                 
                 <div style="margin-bottom: 15px;">
-                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;"> Fashion</h4>
-                    <p style="margin-bottom: 8px; font-size: 12px;">I don't really take fit pics but trust me I have good style here's an example</p>
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;"> Fashion</h4>
+                    <p style="margin-bottom: 8px; font-size: 16px;">I don't really take fit pics but trust me I have good style here's an example</p>
                     <div style="display: flex; gap: 10px; margin-bottom: 5px;">
                         <img src="misc images/fit picture.jpg" alt="Fit Picture" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #999; cursor: pointer;" onclick="openPhotoModal('misc images/fit picture.jpg', 'Fit Picture')">
                         <img src="misc images/fitpic.png" alt="Fit Pic" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #999; cursor: pointer;" onclick="openPhotoModal('misc images/fitpic.png', 'Fit Pic')">
@@ -894,7 +895,7 @@
                 </div>
                 
                 <div style="margin-bottom: 15px;">
-                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;"> Painting</h4>
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;"> Painting</h4>
                     <div style="background: #f0f0f0; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
                         <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;">
                             <img src="misc images/paintings/painting01.jpg" alt="Painting 01" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('misc images/paintings/painting01.jpg', 'Painting 01')">
@@ -907,8 +908,8 @@
                 </div>
                 
                 <div style="margin-bottom: 15px;">
-                    <h4 style="font-weight: normal; font-size: 14px; margin-bottom: 8px;"> Music</h4>
-                    <p style="margin-bottom: 8px; font-size: 12px;">My favorite albums</p>
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;"> Music</h4>
+                    <p style="margin-bottom: 8px; font-size: 16px;">My favorite albums</p>
 
                     <!-- Favorite Albums Carousel -->
                     <div style="background: #f0f0f0; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
@@ -951,8 +952,8 @@
                 <div class="menu-item">Tools</div>
             </div>
             <div class="window-body" style="height: 440px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
-                <h3 style="font-weight: normal; font-size: 16px; margin-bottom: 12px;">Film Photography</h3>
-                <p style="margin-bottom: 8px; font-size: 12px;">I use an old canon sureshot supreme and the minolta freedom zoom</p>
+                <h3 style="font-weight: normal; font-size: 18px; margin-bottom: 12px;">Film Photography</h3>
+                <p style="margin-bottom: 8px; font-size: 16px;">I use an old canon sureshot supreme and the minolta freedom zoom</p>
                 
                 <!-- Film Photos Carousel -->
                 <div style="background: #f0f0f0; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
@@ -1191,7 +1192,9 @@
 
         document.querySelectorAll('.title-bar-controls button').forEach(button => {
             button.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const window = e.target.closest('.window');
+                if (!window) return;
                 const windowId = window.id;
                 const action = e.target.getAttribute('aria-label').toLowerCase();
                 
