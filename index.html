@@ -272,6 +272,7 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             flex: 1;
+            font-size: 11px;
         }
 
         .xp-button {
@@ -490,16 +491,22 @@
             }
 
             .taskbar-item {
-                min-width: 100px;
-                max-width: 150px;
+                min-width: 40px;
+                max-width: 50px;
                 font-size: 10px;
                 padding: 2px 6px;
                 height: 32px;
+                justify-content: center;
             }
 
             .taskbar-item-icon {
-                width: 14px;
-                height: 14px;
+                width: 20px;
+                height: 20px;
+                margin-right: 0;
+            }
+
+            .taskbar-item-text {
+                display: none;
             }
 
             .taskbar-right {
@@ -1065,7 +1072,8 @@
                 taskbarItem.appendChild(icon);
                 taskbarItem.appendChild(text);
                 
-                taskbarItem.addEventListener('click', () => {
+                taskbarItem.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     const winData = openWindows.get(windowId);
                     if (winData) {
                         if (winData.isMinimized) {
@@ -1073,6 +1081,7 @@
                             winData.isMinimized = false;
                         }
                         bringToFront(windowElement);
+                        updateActiveTaskbarItem(windowElement);
                     }
                 });
                 
@@ -1190,13 +1199,15 @@
         document.addEventListener('mouseup', handleDragEnd);
         document.addEventListener('touchend', handleDragEnd);
 
-        document.querySelectorAll('.title-bar-controls button').forEach(button => {
-            button.addEventListener('click', (e) => {
+        // Use event delegation for window controls to handle dynamically created windows
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.title-bar-controls button')) {
+                const button = e.target.closest('.title-bar-controls button');
                 e.stopPropagation();
-                const window = e.target.closest('.window');
+                const window = button.closest('.window');
                 if (!window) return;
                 const windowId = window.id;
-                const action = e.target.getAttribute('aria-label').toLowerCase();
+                const action = button.getAttribute('aria-label').toLowerCase();
                 
                 if (action === 'close') {
                     window.style.display = 'none';
@@ -1258,8 +1269,9 @@
                         
                         window.dataset.maximized = 'true';
                     }
+                    bringToFront(window);
                 }
-            });
+            }
         });
 
         document.querySelectorAll('.desktop-icon').forEach(icon => {
