@@ -104,6 +104,68 @@
             text-decoration: underline;
         }
 
+        .amc-glow {
+            color: #0066cc;
+            font-weight: bold;
+            text-shadow: 0 0 6px rgba(0, 102, 204, 0.7), 0 0 12px rgba(0, 120, 255, 0.4);
+            animation: amc-pulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes amc-pulse {
+            0%, 100% { text-shadow: 0 0 6px rgba(0, 102, 204, 0.7), 0 0 12px rgba(0, 120, 255, 0.4); }
+            50% { text-shadow: 0 0 10px rgba(0, 102, 204, 0.9), 0 0 20px rgba(0, 120, 255, 0.6); }
+        }
+
+        .title-bar-controls button[aria-label="Maximize"] {
+            pointer-events: none;
+            cursor: default;
+        }
+
+        .confirm-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .confirm-overlay.visible {
+            display: flex;
+        }
+
+        .confirm-dialog {
+            width: 320px;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .confirm-dialog .window-body {
+            height: auto;
+            padding: 16px;
+        }
+
+        .confirm-dialog .confirm-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .welcome-contact-link {
+            color: #000080;
+            font-weight: bold;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .welcome-contact-link:hover {
+            color: #1084d0;
+        }
+
         .start-button {
             position: fixed;
             bottom: 0;
@@ -419,20 +481,12 @@
                 font-size: 14px;
             }
 
-            #initial-welcome-window {
-                top: 50% !important;
-                left: 50% !important;
-                transform: translate(-50%, -50%) !important;
-                width: calc(100vw - 40px) !important;
-                max-width: 400px;
-            }
-
             #welcome-window {
                 top: 50% !important;
                 left: 50% !important;
                 transform: translate(-50%, -50%) !important;
                 width: calc(100vw - 40px) !important;
-                max-width: 500px;
+                max-width: 420px;
             }
 
             #mobile-tip {
@@ -550,13 +604,6 @@
                 font-size: 12px;
             }
 
-            .window[data-maximized="true"] {
-                width: calc(100vw - 20px) !important;
-                height: calc(100vh - 60px) !important;
-                left: 10px !important;
-                top: 10px !important;
-            }
-
             #photo-modal {
                 padding: 10px;
             }
@@ -634,14 +681,14 @@
                 <img src="Windows XP Icons/Appearance.png" alt="Interests">
                 <span>Interests</span>
             </div>
-            <div class="desktop-icon" onclick="openWindow('photography-window')">
+            <div class="desktop-icon" onclick="confirmPhotographyRedirect()" title="Opens sarpongphotos.com — leaves this site">
                 <img src="Windows XP Icons/My Pictures.png" alt="Photography">
                 <span>Photography</span>
             </div>
         </div>
 
-        <!-- Initial Welcome Window -->
-        <div class="window active" id="initial-welcome-window" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 450px; height: 300px;">
+        <!-- Welcome Window (merged intro popup) -->
+        <div class="window active" id="welcome-window" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 480px; height: auto; min-height: 340px;">
             <div class="title-bar">
                 <img src="Windows XP Icons/My Computer.png" alt="" class="title-bar-icon">
                 <div class="title-bar-text">Welcome</div>
@@ -651,65 +698,24 @@
                     <button aria-label="Close"></button>
                 </div>
             </div>
-            <div class="window-body">
-                <h2 style="font-weight: normal; font-size: 22px; margin: 0 0 15px 0;">Hi, welcome to my page</h2>
-                <p style="font-size: 16px; line-height: 1.4; margin: 0 0 15px 0;">
-                    Click on the desktop icons to explore the site 
+            <div class="window-body" style="overflow-y: auto; height: auto;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <img src="misc images/headshot cropped.JPG" alt="Brendan" style="width: 72px; height: 72px; border-radius: 50%; border: 2px solid #ccc; flex-shrink: 0;">
+                    <h2 style="font-weight: normal; font-size: 20px; margin: 0;">Hi, I'm Brendan</h2>
+                </div>
+                <p style="font-size: 14px; line-height: 1.45; margin: 0 0 10px 0;">
+                    Columbia CS student (minor in African Studies). My most recent role was in data analytics at <span class="amc-glow">AMC Networks</span>. I'm looking for full-time roles in data science, cybersecurity, or SWE.
                 </p>
-                <p style="font-size: 16px; line-height: 1.4; margin: 0 0 15px 0; font-weight: bold; color: #000080;">
-                    <strong>Tip: Drag windows by clicking and holding the title bar, and resize them using the maximize button</strong>
+                <p style="font-size: 14px; line-height: 1.45; margin: 0 0 10px 0;">
+                    Click the desktop icons to explore. <strong style="color: #000080;">Tip:</strong> drag windows by the title bar.
                 </p>
-                <p id="mobile-tip" style="font-size: 11px; line-height: 1.4; margin: 0 0 15px 0; color: #666; display: none;">
+                <p style="font-size: 14px; line-height: 1.45; margin: 0 0 12px 0;">
+                    Head to the <a class="welcome-contact-link" href="#" onclick="openWindow('contact-window'); return false;">contact page</a> to figure out how to reach me.
+                </p>
+                <p id="mobile-tip" style="font-size: 11px; line-height: 1.4; margin: 0 0 12px 0; color: #666; display: none;">
                     <strong>Mobile tip: Drag the title bar to move windows.</strong>
                 </p>
-                <button class="xp-button" onclick="closeInitialWelcome()" style="width: 100%;">Okay, got it</button>
-            </div>
-        </div>
-
-        <!-- Welcome Window -->
-        <div class="window" id="welcome-window" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 650px; height: 600px;">
-            <div class="title-bar">
-                <img src="Windows XP Icons/My Computer.png" alt="" class="title-bar-icon">
-                <div class="title-bar-text">Welcome to My Page</div>
-                <div class="title-bar-controls">
-                    <button aria-label="Minimize"></button>
-                    <button aria-label="Maximize"></button>
-                    <button aria-label="Close"></button>
-                </div>
-            </div>
-            <div class="menu-bar">
-                <div class="menu-item">File</div>
-                <div class="menu-item">Edit</div>
-                <div class="menu-item">View</div>
-                <div class="menu-item">Tools</div>
-            </div>
-            <div class="window-body" style="overflow-y: auto; height: calc(100% - 40px);">
-                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-                    <img src="misc images/headshot cropped.JPG" alt="Brendan" style="width: 100px; height: 100px; border-radius: 50%; border: 2px solid #ccc;">
-                    <h2 style="font-weight: normal; font-size: 24px; margin: 0;">Hi, I'm Brendan</h2>
-                </div>
-                <p style="font-size: 20px; line-height: 1.6; margin-bottom: 15px;"> Wassup </p>
-                
-                <div class="contact-info">
-                    <h3 style="font-weight: normal; font-size: 18px; margin-bottom: 8px;">Explore My Site</h3>
-                    <p style="font-size: 16px; margin-bottom: 15px; line-height: 1.4;">
-                        Click on the desktop icons to learn more about me.
-                    </p>
-                    
-                    <div style="background: #f0f0f0; border: 1px solid #ccc; padding: 12px; margin-bottom: 15px;">
-                        <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;">About Me</h4>
-                        <p style="font-size: 16px; margin: 0; line-height: 1.4;">
-                            I'm a student at Columbia University studying computer science with a minor in African Studies <br> <br>
-                           My last role was in tech at AMC Networks. 
-                        </p>
-                    </div>
-            
-                    <div style="margin-top: 10px; margin-bottom: 10px;">
-                        <a href="https://open.spotify.com/user/brendansarpong" target="_blank" rel="noopener" style="color: #1db954; font-size: 16px; text-decoration: none; display: flex; align-items: center; gap: 6px; word-wrap: break-word;">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify" style="width: 20px; height: 20px; vertical-align: middle; flex-shrink: 0;"> <span>My Spotify (I have great taste)</span>
-                        </a>
-                    </div>
-                </div>
+                <button class="xp-button" onclick="closeWelcomePopup()" style="width: 100%;">Okay, got it</button>
             </div>
         </div>
 
@@ -784,21 +790,28 @@
             </div>
             <div class="window-body" style="height: 440px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
                 <h3 style="font-weight: normal; font-size: 18px; margin-bottom: 12px;">About Me</h3>
-                <p style="font-size: 16px;">I have many skills tricks and talents</p>
+                <p style="font-size: 16px;">I have many skills and tricks and talents (IBNTL the following)</p>
                 
                 <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;">Skills & Technologies</h4>
                 <ul style="font-size: 16px;">
-                    <li>Frontend: React, HTML5, CSS, JavaScript</li>
-                    <li>Backend: Python, Java, C</li>
-                    <li>Tools: Git, AWS, Figma, Blender</li>
-                    <li>Other: Game Development, UI/UX Design, Cybersecurity, Video Editing</li>
+                    <li><strong>Frontend:</strong> React, HTML5, CSS3, JavaScript</li>
+
+                    <li><strong>Backend:</strong> Java, Python, C, Node.js</li>
+                    
+                    <li><strong>Databases:</strong> MongoDB, SQL</li>
+                    
+                    <li><strong>Cloud & Tools:</strong> Git, AWS, Google Cloud, Figma</li>
+                    
+                    <li><strong>AI-Assisted Development:</strong> Cursor, ChatGPT, Claude</li>
+                    
+                    <li><strong>Additional Skills:</strong> UI/UX Design, Secure Coding Practices, Game Development</li>
                 </ul>
 
                 <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;">Experience</h4>
-                <p style="font-size: 16px;">I started off coding in HTML, CSS, and JavaScript about 7 years ago. Since then I've built mobile games, created websites, and pursued cybersecurity as a career.</p>
+                <p style="font-size: 16px;">I started off coding in HTML, CSS, and JavaScript about 9 years ago. Since then I've built mobile games, created websites, and pursued cybersecurity as a career.</p>
 
                 <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;">Interests</h4>
-                <p style="font-size: 16px;">When I'm not working or in school, I love film photography, skateboarding, movies, music, Better Call Saul, fashion, and soccer (any Chelsea fans?)</p>
+                <p style="font-size: 16px;">When I'm not working or in school, I love taking film pictures, skateboarding, movies, hip hop, fashion, and playing/watching soccer (any Chelsea fans?)</p>
                 
              
             </div>
@@ -829,10 +842,6 @@
                     <div class="contact-item" style="font-size: 16px; margin-bottom: 8px;">
                         <span class="contact-icon"></span>
                         <span><strong>Email:</strong> brendansarpong@gmail.com</span>
-                    </div>
-                    <div class="contact-item" style="font-size: 16px; margin-bottom: 8px;">
-                        <span class="contact-icon"></span>
-                        <span><strong>Phone:</strong> don't worry about it</span>
                     </div>
                     <div class="contact-item" style="font-size: 16px; margin-bottom: 8px;">
                         <span class="contact-icon"></span>
@@ -916,7 +925,7 @@
                 
                 <div style="margin-bottom: 15px;">
                     <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;"> Music</h4>
-                    <p style="margin-bottom: 8px; font-size: 16px;">My favorite albums</p>
+                    <p style="margin-bottom: 8px; font-size: 16px;">Some of favorite albums</p>
 
                     <!-- Favorite Albums Carousel -->
                     <div style="background: #f0f0f0; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
@@ -941,45 +950,22 @@
             </div>
         </div>
 
-        <!-- Photography Window -->
-        <div class="window" id="photography-window" style="top: 150px; left: 160px; width: 650px; height: 500px; display: none;">
-            <div class="title-bar">
-                <img src="Windows XP Icons/My Pictures.png" alt="" class="title-bar-icon">
-                <div class="title-bar-text">Photography</div>
-                <div class="title-bar-controls">
-                    <button aria-label="Minimize"></button>
-                    <button aria-label="Maximize"></button>
-                    <button aria-label="Close"></button>
-                </div>
-            </div>
-            <div class="menu-bar">
-                <div class="menu-item">File</div>
-                <div class="menu-item">Edit</div>
-                <div class="menu-item">View</div>
-                <div class="menu-item">Tools</div>
-            </div>
-            <div class="window-body" style="height: 440px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
-                <h3 style="font-weight: normal; font-size: 18px; margin-bottom: 12px;">Film Photography</h3>
-                <p style="margin-bottom: 8px; font-size: 16px;">I use an old canon sureshot supreme and the minolta freedom zoom</p>
-                
-                <!-- Film Photos Carousel -->
-                <div style="background: #f0f0f0; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-                    <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;">
-                        <img src="film pics/put this one first.JPG" alt="Film Photo 1" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/put this one first.JPG', 'Film Photo 1')">
-                        <img src="film pics/entering the aether.JPG" alt="Film Photo 2" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/entering the aether.JPG', 'Film Photo 2')">
-                        <img src="film pics/friends.JPG" alt="Film Photo 3" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/friends.JPG', 'Film Photo 3')">
-                        <img src="film pics/peeking window.JPG" alt="Film Photo 4" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/peeking window.JPG', 'Film Photo 4')">
-                        <img src="film pics/triple heads.JPG" alt="Film Photo 5" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/triple heads.JPG', 'Film Photo 5')">
-                        <img src="film pics/red car.jpeg" alt="Film Photo 6" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/red car.jpeg', 'Film Photo 6')">
-                        <img src="film pics/IMG_2300.jpeg" alt="Film Photo 7" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/IMG_2300.jpeg', 'Film Photo 7')">
-                        <img src="film pics/painted ladies.jpg" alt="Film Photo 8" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/painted ladies.jpg', 'Film Photo 8')">
-                        <img src="film pics/cali mountains 1.png" alt="Film Photo 9" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/cali mountains 1.png', 'Film Photo 9')">
-                        <img src="film pics/cali mountains 2.png" alt="Film Photo 10" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/cali mountains 2.png', 'Film Photo 10')">
-                        <img src="film pics/000053980018.jpg" alt="Film Photo 11" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('film pics/000053980018.jpg', 'Film Photo 11')">
-                        <img src="misc images/cayman_car.jpeg" alt="Cayman Car" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('misc images/cayman_car.jpeg', 'Cayman Car')">
-                        <img src="misc images/cayman_friends.jpeg" alt="Cayman Friends" style="width: 120px; height: 90px; object-fit: cover; border: 1px solid #999; flex-shrink: 0; cursor: pointer;" onclick="openPhotoModal('misc images/cayman_friends.jpeg', 'Cayman Friends')">
+        <!-- Photography redirect confirmation -->
+        <div id="photography-confirm" class="confirm-overlay">
+            <div class="window confirm-dialog">
+                <div class="title-bar">
+                    <img src="Windows XP Icons/My Pictures.png" alt="" class="title-bar-icon">
+                    <div class="title-bar-text">Photography</div>
+                    <div class="title-bar-controls">
+                        <button aria-label="Close"></button>
                     </div>
-                    <p style="font-size: 10px; color: #666; margin: 5px 0 0 0;">Click any photo to view full size →</p>
+                </div>
+                <div class="window-body">
+                    <p style="font-size: 14px; line-height: 1.45; margin: 0;">Yo! This icon takes you to my photo portfolio. Is that okay?</p>
+                    <div class="confirm-buttons">
+                        <button class="xp-button" onclick="handlePhotographyYes()">Yes</button>
+                        <button class="xp-button" onclick="closePhotographyConfirm()">No</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1139,7 +1125,7 @@
             if (e.target.tagName === 'BUTTON') return;
             
             const window = e.target.closest('.window');
-            if (!window) return;
+            if (!window || window.closest('#photography-confirm')) return;
             
             activeWindow = window;
             isDragging = true;
@@ -1210,66 +1196,22 @@
                 const action = button.getAttribute('aria-label').toLowerCase();
                 
                 if (action === 'close') {
+                    if (window.closest('#photography-confirm')) {
+                        closePhotographyConfirm();
+                        return;
+                    }
                     window.style.display = 'none';
                     removeTaskbarItem(windowId);
                     const activeWindow = document.querySelector('.window.active');
                     updateActiveTaskbarItem(activeWindow);
                 } else if (action === 'minimize') {
+                    if (window.closest('#photography-confirm')) return;
                     window.style.display = 'none';
                     const winData = openWindows.get(windowId);
                     if (winData) {
                         winData.isMinimized = true;
                     }
                     updateActiveTaskbarItem(null);
-                } else if (action === 'maximize') {
-                    const isMaximized = window.dataset.maximized === 'true';
-                    
-                    if (isMaximized) {
-                        const originalSize = window.dataset.originalSize;
-                        if (originalSize) {
-                            const size = JSON.parse(originalSize);
-                            window.style.width = size.width;
-                            window.style.height = size.height;
-                            window.style.top = size.top;
-                            window.style.left = size.left;
-                            window.style.transform = size.transform || '';
-                        } else {
-                            window.style.width = '';
-                            window.style.height = '';
-                            window.style.top = '';
-                            window.style.left = '';
-                            window.style.transform = '';
-                        }
-                        window.dataset.maximized = 'false';
-                    } else {
-                        const originalSize = {
-                            width: window.style.width || window.offsetWidth + 'px',
-                            height: window.style.height || window.offsetHeight + 'px',
-                            top: window.style.top || (window.offsetTop + 'px'),
-                            left: window.style.left || (window.offsetLeft + 'px'),
-                            transform: window.style.transform || ''
-                        };
-                        window.dataset.originalSize = JSON.stringify(originalSize);
-                        
-                        window.style.transform = '';
-                        
-                        const isMobile = window.innerWidth <= 768;
-                        const widthPercent = isMobile ? 0.95 : 0.8;
-                        const heightPercent = isMobile ? 0.9 : 0.85;
-                        const taskbarHeight = isMobile ? 40 : 28;
-                        
-                        const maxWidth = Math.min(window.innerWidth * widthPercent, 1200);
-                        const maxHeight = Math.min((window.innerHeight - taskbarHeight) * heightPercent, 800);
-                        
-                        window.style.width = maxWidth + 'px';
-                        window.style.height = maxHeight + 'px';
-                        
-                        window.style.left = ((window.innerWidth - maxWidth) / 2) + 'px';
-                        window.style.top = ((window.innerHeight - maxHeight - taskbarHeight) / 2) + 'px';
-                        
-                        window.dataset.maximized = 'true';
-                    }
-                    bringToFront(window);
                 }
             }
         });
@@ -1316,20 +1258,13 @@
         document.addEventListener('DOMContentLoaded', () => {
             const welcomeWindow = document.getElementById('welcome-window');
             if (welcomeWindow) {
-                welcomeWindow.style.display = 'block';
-                welcomeWindow.classList.remove('active');
                 updateTaskbarItem('welcome-window', welcomeWindow);
-            }
-            
-            const initialWelcomeWindow = document.getElementById('initial-welcome-window');
-            if (initialWelcomeWindow) {
-                updateTaskbarItem('initial-welcome-window', initialWelcomeWindow);
-                updateActiveTaskbarItem(initialWelcomeWindow);
-                
+                updateActiveTaskbarItem(welcomeWindow);
+
                 if (window.innerWidth <= 768) {
-                    initialWelcomeWindow.style.top = '50%';
-                    initialWelcomeWindow.style.left = '50%';
-                    initialWelcomeWindow.style.transform = 'translate(-50%, -50%)';
+                    welcomeWindow.style.top = '50%';
+                    welcomeWindow.style.left = '50%';
+                    welcomeWindow.style.transform = 'translate(-50%, -50%)';
                 }
             }
             
@@ -1357,11 +1292,11 @@
             }, 1000);
         });
 
-        function closeInitialWelcome() {
-            const initialWelcome = document.getElementById('initial-welcome-window');
-            if (initialWelcome) {
-                initialWelcome.style.display = 'none';
-                removeTaskbarItem('initial-welcome-window');
+        function closeWelcomePopup() {
+            const welcome = document.getElementById('welcome-window');
+            if (welcome) {
+                welcome.style.display = 'none';
+                removeTaskbarItem('welcome-window');
                 const activeWindow = document.querySelector('.window.active');
                 updateActiveTaskbarItem(activeWindow);
             }
@@ -1371,6 +1306,19 @@
                     console.log('Audio played on user interaction');
                 }).catch(e => console.log('Audio still blocked:', e));
             }
+        }
+
+        function confirmPhotographyRedirect() {
+            document.getElementById('photography-confirm').classList.add('visible');
+        }
+
+        function closePhotographyConfirm() {
+            document.getElementById('photography-confirm').classList.remove('visible');
+        }
+
+        function handlePhotographyYes() {
+            window.open('https://sarpongphotos.com', '_blank', 'noopener');
+            closePhotographyConfirm();
         }
 
         function openPhotoModal(imageSrc, title) {
@@ -1391,6 +1339,12 @@
         document.getElementById('photo-modal').addEventListener('click', (e) => {
             if (e.target.id === 'photo-modal') {
                 closePhotoModal();
+            }
+        });
+
+        document.getElementById('photography-confirm').addEventListener('click', (e) => {
+            if (e.target.id === 'photography-confirm') {
+                closePhotographyConfirm();
             }
         });
     </script>
