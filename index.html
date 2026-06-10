@@ -104,16 +104,25 @@
             text-decoration: underline;
         }
 
-        .amc-glow {
-            color: #0066cc;
-            font-weight: bold;
-            text-shadow: 0 0 6px rgba(0, 102, 204, 0.7), 0 0 12px rgba(0, 120, 255, 0.4);
-            animation: amc-pulse 2.5s ease-in-out infinite;
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: inherit;
+            text-decoration: none;
         }
 
-        @keyframes amc-pulse {
-            0%, 100% { text-shadow: 0 0 6px rgba(0, 102, 204, 0.7), 0 0 12px rgba(0, 120, 255, 0.4); }
-            50% { text-shadow: 0 0 10px rgba(0, 102, 204, 0.9), 0 0 20px rgba(0, 120, 255, 0.6); }
+        .contact-link:hover {
+            text-decoration: underline;
+        }
+
+        .contact-link img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            flex-shrink: 0;
         }
 
         .title-bar-controls button[aria-label="Maximize"] {
@@ -700,11 +709,11 @@
             </div>
             <div class="window-body" style="overflow-y: auto; height: auto;">
                 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                    <img src="misc images/headshot cropped.JPG" alt="Brendan" style="width: 72px; height: 72px; border-radius: 50%; border: 2px solid #ccc; flex-shrink: 0;">
+                    <img src="misc images/headshot cropped.JPG" alt="Brendan" style="width: 100px; height: 100px; border-radius: 50%; border: 2px solid #ccc; flex-shrink: 0;">
                     <h2 style="font-weight: normal; font-size: 20px; margin: 0;">Hi, I'm Brendan</h2>
                 </div>
                 <p style="font-size: 14px; line-height: 1.45; margin: 0 0 10px 0;">
-                    Columbia CS student (minor in African Studies). My most recent role was in data analytics at <span class="amc-glow">AMC Networks</span>. I'm looking for full-time roles in data science, cybersecurity, or SWE.
+                    Columbia CS student (minor in African Studies). My most recent role was in data analytics at AMC Networks. I'm looking for full-time roles in data science, cybersecurity, or SWE.
                 </p>
                 <p style="font-size: 14px; line-height: 1.45; margin: 0 0 10px 0;">
                     Click the desktop icons to explore. <strong style="color: #000080;">Tip:</strong> drag windows by the title bar.
@@ -753,7 +762,7 @@
 
                 <div class="portfolio-item">
                     <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">Surgery Turnover Time App</h4>
-                    <p style="font-size: 16px;">Me and my bud developed an app with doctors from the Spine Institute of San Diego that helps doctors reduce turnover time between surgeries, allowing them to help more people. <br> We coded it in React Native and used Firebase for the backend.</p>
+                    <p style="font-size: 16px;">Me and a fellow Columbia student developed an app with doctors from the Spine Institute of San Diego that helps doctors reduce turnover time between surgeries, allowing them to help more people. <br> We coded it in React Native and used Firebase for the backend.<br> <br> Given the medical nature of the app, a lot of info is sensitive. Reach out to me if you're interested in more details.</p>
                 </div>
 
                 <div class="portfolio-item">
@@ -841,17 +850,20 @@
                 <div class="contact-info" style="margin-top: 10px;">
                     <div class="contact-item" style="font-size: 16px; margin-bottom: 8px;">
                         <span class="contact-icon"></span>
-                        <span><strong>Email:</strong> brendansarpong@gmail.com</span>
+                        <span><strong>Email:</strong> <a href="mailto:brendansarpong@gmail.com">brendansarpong@gmail.com</a></span>
                     </div>
-                    <div class="contact-item" style="font-size: 16px; margin-bottom: 8px;">
-                        <span class="contact-icon"></span>
+                    <a href="https://linkedin.com/in/brendansarpong" target="_blank" rel="noopener" class="contact-link">
+                        <img src="misc images/linkedin_logo.jpg" alt="LinkedIn">
                         <span><strong>LinkedIn:</strong> linkedin.com/in/brendansarpong</span>
-                    </div>
-                    <div class="contact-item" style="font-size: 16px; margin-bottom: 8px;">
-                        <span class="contact-icon"></span>
+                    </a>
+                    <a href="https://github.com/brendansarpong" target="_blank" rel="noopener" class="contact-link">
+                        <img src="misc images/github_logo.png" alt="GitHub">
                         <span><strong>GitHub:</strong> github.com/brendansarpong</span>
-                    </div>
-        
+                    </a>
+                    <a href="https://open.spotify.com/user/brendansarpong" target="_blank" rel="noopener" class="contact-link">
+                        <img src="misc images/spotify_logo.png" alt="Spotify">
+                        <span><strong>Spotify:</strong> open.spotify.com/user/brendansarpong</span>
+                    </a>
                 </div>
 
             </div>
@@ -999,28 +1011,17 @@
     <script>
         const startupSound = new Audio('Microsoft Windows XP Startup Sound.mp3');
         startupSound.volume = 0.5;
-        
-        startupSound.addEventListener('canplaythrough', () => {
-            console.log('Audio loaded successfully');
-        });
-        
-        startupSound.addEventListener('error', (e) => {
-            console.log('Audio loading error:', e);
-        });
-        
-        window.addEventListener('load', () => {
-            console.log('Page loaded, attempting to play audio...');
-            setTimeout(() => {
-                startupSound.play().then(() => {
-                    console.log('Audio played successfully');
-                }).catch(error => {
-                    console.log('Audio playback prevented by browser:', error);
-                    document.addEventListener('click', () => {
-                        startupSound.play().catch(e => console.log('Still blocked:', e));
-                    }, { once: true });
-                });
-            }, 500);
-        });
+        let startupSoundPlayed = false;
+
+        function playStartupSoundOnce() {
+            if (startupSoundPlayed) return;
+            startupSoundPlayed = true;
+            startupSound.currentTime = 0;
+            startupSound.play().catch(e => console.log('Audio playback blocked:', e));
+        }
+
+        document.addEventListener('click', playStartupSoundOnce, { once: true });
+        document.addEventListener('touchstart', playStartupSoundOnce, { once: true });
         
         let activeWindow = null;
         let isDragging = false;
@@ -1299,12 +1300,6 @@
                 removeTaskbarItem('welcome-window');
                 const activeWindow = document.querySelector('.window.active');
                 updateActiveTaskbarItem(activeWindow);
-            }
-            
-            if (startupSound.paused) {
-                startupSound.play().then(() => {
-                    console.log('Audio played on user interaction');
-                }).catch(e => console.log('Audio still blocked:', e));
             }
         }
 
