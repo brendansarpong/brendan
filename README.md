@@ -1,85 +1,56 @@
-## XP.css
+# Brendan's XP Portfolio
 
-[![npm](https://img.shields.io/npm/v/xp.css)](http://npm.im/xp.css)
-[![gzip size](https://img.shields.io/bundlephobia/minzip/xp.css)](https://unpkg.com/xp.css)
+A personal website dressed up as a Windows XP desktop. Click icons, drag windows around, minimize stuff — the whole bit.
 
-A design system for building faithful recreations of old UIs.
+Built on top of [XP.css](https://github.com/botoxparty/XP.css), a CSS library that makes plain HTML look like old Windows UI. This repo has that library in it (`gui/`, `themes/`, `build.js`) plus the actual site.
 
-<img alt="a screenshot of a window with the title 'My First Program' and two buttons OK and Cancel, styled like a Windows XP dialog" src="https://github.com/botoxparty/XP.css/blob/main/docs/window.png?raw=true" height="133">
+## What's in `index.html`
 
-<img alt="a screenshot of a window with the title 'My First Program' and two buttons OK and Cancel, styled like a Windows 98 dialog" src="https://github.com/jdan/98.css/blob/main/docs/window.png?raw=true" height="133">
+Everything lives in one file — HTML, CSS, and JS. 
 
-XP.css is an extension of 98.css. A CSS file that takes semantic HTML and makes it look pretty. It does not ship with any JavaScript, so it is compatible with your frontend framework of choice.
+**The desktop**
+- Bliss wallpaper background
+- Six desktop icons: Welcome, Portfolio, About Me, Contact, Interests, and Photography
+- Photography opens a confirmation dialog before sending you to [sarpongphotos.com](https://sarpongphotos.com)
 
-### Installation / Usage
+**The windows**
+- **Welcome** — intro popup with headshot and a quick bio. Opens on load.
+- **Portfolio** — projects (Sample Search, GTS Misinformation, Surgery Turnover App, Gr8 Eagle Cyber, etc.)
+- **About Me** — skills, experience, general background
+- **Contact** — email, LinkedIn, GitHub, Spotify
+- **Interests** — camcorder clips, photos, album covers, paintings, and other hobbies
 
-The easiest way to use XP.css is to import it from [unpkg](https://unpkg.com/).
+**The taskbar**
+- Start button (reloads the page)
+- Live clock
+- Taskbar buttons for each open window — click to restore, drag title bars to move
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>XP.css example</title>
-    <meta charset="UTF-8" />
+**Other behavior**
+- XP startup sound on first click/tap
+- Draggable windows with minimize/close controls (maximize is disabled)
+- Photo lightbox for images in the Interests window
+- Responsive tweaks for mobile
 
-    <!-- Windows XP Theme (include only one theme at a time) -->
-    <link rel="stylesheet" href="https://unpkg.com/xp.css" />
+## Other folders (briefly)
 
-    <!-- Windows 98 Theme (include only one theme at a time) -->
-    <link rel="stylesheet" href="https://unpkg.com/xp.css@0.2.3/dist/98.css" />
-  </head>
+| Folder | What it is |
+|--------|------------|
+| `gui/`, `themes/` | XP.css source — shared component styles and XP/98 theme overrides |
+| `docs/` | Component documentation site for the CSS library |
+| `misc images/`, `Windows XP Icons/`, `album covers/` | Assets for the portfolio |
+| `dist/` | Built CSS output (from `npm run build`) |
 
-  <body>
-    <div class="window" style="margin: 32px; width: 250px">
-      <div class="title-bar">
-        <div class="title-bar-text">
-          My First Program
-        </div>
-      </div>
-      <div class="window-body">
-        <p>Hello, world!</p>
-      </div>
-    </div>
-  </body>
-</html>
-```
+## Running it
 
-Alternatively, you can grab XP.css from [npm](https://www.npmjs.com/package/xp.css).
+**Portfolio:** open `index.html` in a browser. A local server works better if audio or file paths act up:
 
 ```
-npm install xp.css
-
-Usage:
-
-// For XP
-import "xp.css/dist/XP.css";
-
-// For 98
-import "xp.css/dist/98.css";
+npx live-server
 ```
 
-Here is an example of [XP.css being used with React](https://codesandbox.io/s/silly-bas-dln9t?file=/src/index.js), and [an example with vanilla JavaScript](https://codesandbox.io/s/vigilant-night-2jkz3?file=/index.html).
+**CSS library dev:** `npm install`, then `npm run build` to compile styles into `dist/`.
 
-Refer to the [documentation page](https://botoxparty.github.io/XP.css/) for specific instructions on this library's components.
+## Credits
 
-### Developing
-
-Clone the repo and run `npm install`.
-
-The core styles are managed in [`gui`](https://github.com/botoxparty/XP.css/tree/main/gui).
-
-To create your own theme for the GUI you can extend the core styles. See the XP and 98 [`themes`](https://github.com/botoxparty/XP.css/tree/main/themes)
-
-You can use `npm start` to start a development environment that will watch for file changes and rebuild the files, reloading your browser in the process.
-
-You can run a build manually with `npm run build`. This will write to the `dist/` directory.
-
-### Issues, Contributing, etc.
-
-I would love to see other people's work on gui.css, if anyone else if up for creating a theme for another OS using this framework. Also new components and bugs/issues are also welcome! Feel free to contribute in whatever way you like!
-
-Also please refer to [the GitHub issues page](https://github.com/jdan/98.css/issues) for [jdan's](https://twitter.com/jdan) 98.css.
-
-### License
-
-[MIT](https://github.com/botoxparty/XP.css/blob/main/LICENSE)
+- UI styling: [XP.css](https://github.com/botoxparty/XP.css) by Adam Hammad (MIT)
+- Site content and window logic: Brendan Sarpong
