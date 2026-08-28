@@ -104,6 +104,102 @@
             text-decoration: underline;
         }
 
+        .portfolio-item .role-meta {
+            font-size: 13px;
+            color: #444;
+            margin: 0 0 8px 0;
+            font-style: italic;
+        }
+
+        .portfolio-item .portfolio-desc {
+            font-size: 14px;
+            line-height: 1.45;
+            margin: 0 0 8px 0;
+        }
+
+        .portfolio-item ul {
+            margin: 0 0 8px 0;
+            padding-left: 18px;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+
+        .portfolio-item ul li {
+            margin-bottom: 4px;
+        }
+
+        .portfolio-impact {
+            color: #000080;
+            font-weight: bold;
+        }
+
+        .portfolio-section-heading {
+            font-weight: normal;
+            font-size: 18px;
+            margin: 18px 0 10px 0;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #999;
+            color: #000080;
+        }
+
+        .portfolio-section-heading:first-child {
+            margin-top: 0;
+        }
+
+        .portfolio-skills {
+            background: #e8e8e8;
+            border: 1px solid #bbb;
+            padding: 10px 12px;
+            margin-bottom: 4px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .portfolio-skills strong {
+            color: #000080;
+        }
+
+        .portfolio-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .screenshots-dialog {
+            width: 680px;
+            max-width: calc(100vw - 24px);
+            max-height: calc(100vh - 80px);
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .screenshots-dialog .window-body {
+            height: auto;
+            max-height: calc(100vh - 140px);
+            overflow-y: auto;
+            padding: 14px;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .screenshots-grid img {
+            width: 100%;
+            height: 110px;
+            object-fit: cover;
+            border: 1px solid #999;
+            cursor: pointer;
+            background: #fff;
+        }
+
+        .screenshots-grid img:hover {
+            outline: 2px solid #000080;
+        }
+
         .contact-link {
             display: flex;
             align-items: center;
@@ -729,7 +825,7 @@
         </div>
 
         <!-- Portfolio Window -->
-        <div class="window" id="portfolio-window" style="top: 200px; left: 160px; width: 600px; height: 450px; display: none;">
+        <div class="window" id="portfolio-window" style="top: 120px; left: 160px; width: 680px; height: 520px; display: none;">
             <div class="title-bar">
                 <img src="Windows XP Icons/Briefcase.png" alt="" class="title-bar-icon">
                 <div class="title-bar-text">Portfolio</div>
@@ -745,38 +841,108 @@
                 <div class="menu-item">View</div>
                 <div class="menu-item">Tools</div>
             </div>
-            <div class="window-body" style="height: 390px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
-                <h3 style="font-weight: normal; font-size: 18px; margin-bottom: 12px;">My Projects</h3>
-                
+            <div class="window-body" style="height: 460px; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;">
+                <h3 style="font-weight: normal; font-size: 18px; margin: 0 0 12px 0;">Experience & Projects</h3>
+
+                <div class="portfolio-skills">
+                    <strong>Languages:</strong> Python, TypeScript, JavaScript, Java, C, SQL &nbsp;|&nbsp;
+                    <strong>Frontend:</strong> React, Next.js, Tailwind &nbsp;|&nbsp;
+                    <strong>Backend:</strong> Node.js, Express, REST APIs, Supabase<br>
+                    <strong>Data & ML:</strong> NumPy, Pandas, OpenCV, model tuning &nbsp;|&nbsp;
+                    <strong>Databases:</strong> PostgreSQL, Firebase &nbsp;|&nbsp;
+                    <strong>Tools:</strong> Git, Docker, Cursor, Claude &nbsp;|&nbsp;
+                    <strong>Cloud:</strong> AWS, Vercel, Firebase
+                </div>
+
+                <h4 class="portfolio-section-heading">Work Experience</h4>
+
+                <div class="portfolio-item">
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">Crackd.ai — Backend, Mobile & ML Developer</h4>
+                    <p class="role-meta">Columbia University · Sep 2025 – May 2026</p>
+                    <ul>
+                        <li>Built backend infrastructure for a live AI meme generator and public forum using Supabase (auth, database, storage, realtime), under Professor Lydia Chilton</li>
+                        <li>Trained and tuned an image-captioning model across different humor styles; contributed to early iOS and Android development</li>
+                    </ul>
+                </div>
+
+                <div class="portfolio-item">
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">AMC Networks — Global Technology & Operations Intern</h4>
+                    <p class="role-meta">May 2025 – Aug 2025</p>
+                    <ul>
+                        <li>Built an internal LLM-powered search tool in Python using a RAG architecture, integrating 20,000+ film and TV records across licensing, metadata, and artwork systems</li>
+                        <li>Replaced manual, spreadsheet-based lookup with a natural language interface; adopted for daily use and cut lookup time by an estimated <span class="portfolio-impact">40%</span></li>
+                    </ul>
+                </div>
+
+                <div class="portfolio-item">
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">Surgical Turnover Analytics Platform — Co-Developer</h4>
+                    <p class="role-meta">San Diego Spine and Brain Institute · Contract · Jan 2025 – Sep 2025</p>
+                    <p class="portfolio-desc">Built a React and TypeScript dashboard with a REST API backend, giving two hospital teams live visibility into room readiness and task status. Worked directly with surgical and cleaning staff to redesign the interface around real floor usage, cutting average turnover time by an estimated <span class="portfolio-impact">35%</span>.</p>
+                    <p class="portfolio-desc" style="font-size: 13px; color: #555;">Many operational and patient-related details stay private, but the screenshots below should give you a general sense of the UI and workflow.</p>
+                    <div class="portfolio-actions">
+                        <button class="xp-button" onclick="openTurnoverScreenshots()">View Screenshots →</button>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">Lamont-Doherty Earth Observatory — Research Assistant & Software Developer</h4>
+                    <p class="role-meta">Columbia University · Jan 2025 – Jan 2026</p>
+                    <ul>
+                        <li>Wrote a Python program (NumPy, Pandas) processing 100+ hours of raw eruption footage into structured, analysis-ready datasets</li>
+                        <li>Applied OpenCV contour detection for eruption velocity and morphology measurements; fixed a lighting-variation bug that had been corrupting measurement accuracy</li>
+                    </ul>
+                </div>
+
+                <div class="portfolio-item">
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">Digital Literacy Research Initiative — Lead Researcher & Developer</h4>
+                    <p class="role-meta">Columbia Global Thought Scholars · Nov 2024 – Dec 2025</p>
+                    <ul>
+                        <li>Independently designed and ran a mixed-methods study surveying 80+ participants on identifying manipulative and AI-generated content</li>
+                        <li>Presented findings to a symposium of researchers; built an interactive HTML/CSS/JS curriculum from the results</li>
+                    </ul>
+                    <div class="portfolio-actions">
+                        <a href="https://brendansarpong.github.io/gts-misinfo/" target="_blank" rel="noopener" style="font-size: 14px;">View Curriculum Site →</a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">Gr8 Eagle Cyber — Web Developer & Security Intern</h4>
+                    <p class="role-meta">Apr 2024 – Jun 2025</p>
+                    <ul>
+                        <li>Assessed 15+ client and internal web applications for vulnerabilities using OWASP ZAP and Burp Suite, translating findings into plain-language guidance for non-technical clients</li>
+                        <li>Authored 11 technical security articles and produced roughly a dozen short-form videos; maintained a production WordPress site</li>
+                    </ul>
+                    <div class="portfolio-actions">
+                        <a href="https://gr8eaglecyber.com/" target="_blank" rel="noopener" style="font-size: 14px;">View Site →</a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">WKCR — Radio Host & Producer</h4>
+                    <p class="role-meta">Columbia University · Apr 2024 – May 2026</p>
+                    <ul>
+                        <li>Hosted <em>Offbeat</em>, a weekly hip hop variety show on the same WKCR lineup that helped launch Jay-Z, Biggie, Lauryn Hill, and Wu-Tang Clan</li>
+                        <li>Co-produced <em>Notes from Underground</em>, conducting interviews and editing audio/video; designed promotional graphics for station programming</li>
+                    </ul>
+                </div>
+
+                <h4 class="portfolio-section-heading">Side Projects</h4>
+
                 <div class="portfolio-item">
                     <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">Sample Search</h4>
-                    <p style="font-size: 16px;">A fun game I made that teaches you how to identify samples in hip hop songs. Made for a Columbia UI Design course</p>
-                    <a href="https://brendan-sarpong.github.io/samplesearch/" target="_blank" rel="noopener" style="font-size: 16px;">View Project →</a>
-                </div>
-
-                <div class="portfolio-item">
-                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">GTS Misinformation Site</h4>
-                    <p style="font-size: 16px;">This site houses a curriculum I made for a research project on misinformation.</p>
-                    <a href="https://brendansarpong.github.io/gts-misinfo/" target="_blank" rel="noopener" style="font-size: 16px;">View Project →</a>
-                </div>
-
-                <div class="portfolio-item">
-                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">Surgery Turnover Time App</h4>
-                    <p style="font-size: 16px;">Me and a fellow Columbia student developed an app with doctors from the Spine Institute of San Diego that helps doctors reduce turnover time between surgeries, allowing them to help more people. <br> We coded it in React Native and used Firebase for the backend.<br> <br> Given the medical nature of the app, a lot of info is sensitive. Reach out to me if you're interested in more details.</p>
-                </div>
-
-                <div class="portfolio-item">
-                    <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">Gr8 Eagle Cyber</h4>
-                    <p style="font-size: 16px;">I interned at a cybersecurity startup called Gr8 Eagle Cyber. In addition to my Security Intern role, I also worked on the website and marketing.</p>
-                    <a href="https://gr8eaglecyber.com/"  target="_blank" rel="noopener" style="font-size: 16px;">View Site →</a>
+                    <p class="portfolio-desc">A fun game that teaches you how to identify samples in hip hop songs. Built for a Columbia UI Design course.</p>
+                    <div class="portfolio-actions">
+                        <a href="https://brendan-sarpong.github.io/samplesearch/" target="_blank" rel="noopener" style="font-size: 14px;">View Project →</a>
+                    </div>
                 </div>
 
                 <div class="portfolio-item">
                     <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 5px;">Amateur Game Design</h4>
-                    <p style="font-size: 16px;">I used to make (bad) games in my free time. Here's one of them from years ago. Warning: rough around the edges</p>
-                    <a href="https://notbrendan.itch.io/updog"  target="_blank" rel="noopener" style="font-size: 16px;">View Site →</a>
+                    <p class="portfolio-desc">Games I made in my free time years ago. Warning: rough around the edges.</p>
+                    <div class="portfolio-actions">
+                        <a href="https://notbrendan.itch.io/updog" target="_blank" rel="noopener" style="font-size: 14px;">View on itch.io →</a>
+                    </div>
                 </div>
-                
             </div>
         </div>
 
@@ -820,7 +986,7 @@
                 <p style="font-size: 16px;">I started off coding in HTML, CSS, and JavaScript about 9 years ago. Since then I've built mobile games, created websites, and pursued cybersecurity as a career.</p>
 
                 <h4 style="font-weight: normal; font-size: 16px; margin-bottom: 8px;">Interests</h4>
-                <p style="font-size: 16px;">When I'm not working or in school, I love taking film pictures, skateboarding, movies, hip hop, fashion, and playing/watching soccer (any Chelsea fans?)</p>
+                <p style="font-size: 16px;">When I'm not working or in school, I love taking film pictures, skateboarding, movies, hip hop, fashion, and playing/watching soccer (go Chelsea)</p>
                 
              
             </div>
@@ -982,8 +1148,37 @@
             </div>
         </div>
 
+        <!-- Turnover App Screenshots -->
+        <div id="turnover-screenshots-modal" class="confirm-overlay">
+            <div class="window screenshots-dialog">
+                <div class="title-bar">
+                    <img src="Windows XP Icons/Briefcase.png" alt="" class="title-bar-icon">
+                    <div class="title-bar-text">Surgical Turnover App — Screenshots</div>
+                    <div class="title-bar-controls">
+                        <button aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="window-body">
+                    <p style="font-size: 13px; line-height: 1.45; margin: 0;">UI previews only — sensitive hospital data has been omitted. Click any image for full size.</p>
+                    <div class="screenshots-grid">
+                        <img src="turnovertimeappss/IMG_9225.PNG" alt="Turnover app screenshot 1" onclick="openPhotoModal('turnovertimeappss/IMG_9225.PNG', 'Turnover App — Screenshot 1')">
+                        <img src="turnovertimeappss/IMG_9226.PNG" alt="Turnover app screenshot 2" onclick="openPhotoModal('turnovertimeappss/IMG_9226.PNG', 'Turnover App — Screenshot 2')">
+                        <img src="turnovertimeappss/IMG_9227.PNG" alt="Turnover app screenshot 3" onclick="openPhotoModal('turnovertimeappss/IMG_9227.PNG', 'Turnover App — Screenshot 3')">
+                        <img src="turnovertimeappss/IMG_9228.PNG" alt="Turnover app screenshot 4" onclick="openPhotoModal('turnovertimeappss/IMG_9228.PNG', 'Turnover App — Screenshot 4')">
+                        <img src="turnovertimeappss/IMG_9229.PNG" alt="Turnover app screenshot 5" onclick="openPhotoModal('turnovertimeappss/IMG_9229.PNG', 'Turnover App — Screenshot 5')">
+                        <img src="turnovertimeappss/IMG_9230.PNG" alt="Turnover app screenshot 6" onclick="openPhotoModal('turnovertimeappss/IMG_9230.PNG', 'Turnover App — Screenshot 6')">
+                        <img src="turnovertimeappss/IMG_9231.PNG" alt="Turnover app screenshot 7" onclick="openPhotoModal('turnovertimeappss/IMG_9231.PNG', 'Turnover App — Screenshot 7')">
+                        <img src="turnovertimeappss/IMG_9232.PNG" alt="Turnover app screenshot 8" onclick="openPhotoModal('turnovertimeappss/IMG_9232.PNG', 'Turnover App — Screenshot 8')">
+                        <img src="turnovertimeappss/IMG_9233.PNG" alt="Turnover app screenshot 9" onclick="openPhotoModal('turnovertimeappss/IMG_9233.PNG', 'Turnover App — Screenshot 9')">
+                        <img src="turnovertimeappss/IMG_9234.PNG" alt="Turnover app screenshot 10" onclick="openPhotoModal('turnovertimeappss/IMG_9234.PNG', 'Turnover App — Screenshot 10')">
+                        <img src="turnovertimeappss/IMG_9235.PNG" alt="Turnover app screenshot 11" onclick="openPhotoModal('turnovertimeappss/IMG_9235.PNG', 'Turnover App — Screenshot 11')">
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Photo Modal -->
-        <div id="photo-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center;">
+        <div id="photo-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 4000; justify-content: center; align-items: center;">
             <div style="background: white; padding: 20px; border-radius: 5px; max-width: 90%; max-height: 90%; position: relative;">
                 <button onclick="closePhotoModal()" style="position: absolute; top: 10px; right: 15px; background: #f0f0f0; border: 1px solid #ccc; padding: 5px 10px; cursor: pointer; font-family: 'MS Sans Serif', sans-serif; font-size: 12px;">✕ Close</button>
                 <h3 id="modal-title" style="margin: 0 0 15px 0; font-weight: normal; font-size: 16px;"></h3>
@@ -1126,7 +1321,7 @@
             if (e.target.tagName === 'BUTTON') return;
             
             const window = e.target.closest('.window');
-            if (!window || window.closest('#photography-confirm')) return;
+            if (!window || window.closest('#photography-confirm') || window.closest('#turnover-screenshots-modal')) return;
             
             activeWindow = window;
             isDragging = true;
@@ -1201,12 +1396,16 @@
                         closePhotographyConfirm();
                         return;
                     }
+                    if (window.closest('#turnover-screenshots-modal')) {
+                        closeTurnoverScreenshots();
+                        return;
+                    }
                     window.style.display = 'none';
                     removeTaskbarItem(windowId);
                     const activeWindow = document.querySelector('.window.active');
                     updateActiveTaskbarItem(activeWindow);
                 } else if (action === 'minimize') {
-                    if (window.closest('#photography-confirm')) return;
+                    if (window.closest('#photography-confirm') || window.closest('#turnover-screenshots-modal')) return;
                     window.style.display = 'none';
                     const winData = openWindows.get(windowId);
                     if (winData) {
@@ -1316,6 +1515,14 @@
             closePhotographyConfirm();
         }
 
+        function openTurnoverScreenshots() {
+            document.getElementById('turnover-screenshots-modal').classList.add('visible');
+        }
+
+        function closeTurnoverScreenshots() {
+            document.getElementById('turnover-screenshots-modal').classList.remove('visible');
+        }
+
         function openPhotoModal(imageSrc, title) {
             const modal = document.getElementById('photo-modal');
             const modalImage = document.getElementById('modal-image');
@@ -1340,6 +1547,12 @@
         document.getElementById('photography-confirm').addEventListener('click', (e) => {
             if (e.target.id === 'photography-confirm') {
                 closePhotographyConfirm();
+            }
+        });
+
+        document.getElementById('turnover-screenshots-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'turnover-screenshots-modal') {
+                closeTurnoverScreenshots();
             }
         });
     </script>
